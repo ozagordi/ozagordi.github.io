@@ -2,13 +2,13 @@
 title: Sharp Bell
 header-img: img/home-bg.jpg
 email_username: firstname.lastname@gmail.com
-copyright_name: Your/Project/Corporate Name
+copyright_name: Osvaldo Zagordi
 description: > # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
-baseurl: ""
-url: "http://yourdomain.com"
+baseurl:
+url: "https://ozagordi.github.io"
 #twitter_username: SBootstrap
 github_username: ozagordi
 linkedin_username: osvaldozagordi
