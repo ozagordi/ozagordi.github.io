@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+
+    <title>Confidence interval and hypothesis test - Sharp Bell</title>
+
+    <link rel="canonical" href="http://yourdomain.com/2016/06/27/confidence-interval-and-hypothesis-test/">
+
+    <!-- MathJax -->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/clean-blog.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href='//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link type="application/atom+xml" rel="alternate" href="http://yourdomain.com/feed.xml" title="Sharp Bell" />
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Sharp Bell</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                
+				
+                <li>
+                    <a href="/about/">About</a>
+                </li>
+				
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Confidence interval and hypothesis test</h1>
+                    
+                    <span class="meta">Posted by Osvaldo on June 27, 2016</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+				<h2 id="if-all-tests-are-negative-the-positive-rate-is-zero.-and-its-confidence-interval">If all tests are negative, the positive rate is zero. And its confidence interval?</h2>
+<p>Some time ago a colleague presented me a simple statistics question which, as usual, turned out to be quite interesting and intriguing. They had run 23 tests that were all negative, and they wanted to have a confidence interval for the proportion of positive outcomes. So, to put it in statistical terms, we have <span class="math inline">\(n\)</span> observations that can be 0 or 1. Each observation has a probability <span class="math inline">\(\theta\)</span> of being positive. In formulas</p>
+<p><span class="math display">\[
+x_i \in \{0, 1\} \quad \forall i = 1, \ldots , n \\
+p(x_i=1) = \theta .
+\]</span></p>
+<p>We know that the number of successes is binomially distributed, thus a sufficient statistics is <span class="math inline">\(T = \sum_i x_i\)</span> and that the maximum likelihood estimator for the binomial proprtion is <span class="math display">\[
+\hat{\theta} = \frac{T}{n} .
+\]</span></p>
+<p>If the observations are all negative, the estimate for the rate is clearly zero, but what about its confidence interval? I had never been asked to estimate the confidence interval for the binomial distribution, so I was totally unprepared (shame on me!). Quite instinctively, I computed the probability to observe all 23 results negative for a given <span class="math inline">\(\theta\)</span>, set this to 5% and solved for <span class="math inline">\(\theta\)</span>. Result, 12.2%. In formula</p>
+<p><span class="math display">\[
+p(\mathrm{all\;negatives}\, |\, \theta) = (1-\theta)^n \leq \alpha,
+\]</span></p>
+<p>which gives, solving for <span class="math inline">\(\theta\)</span>,</p>
+<p><span class="math display">\[
+\theta_u = 1 - \alpha^{1/n} \\
+\theta_u(n=23) = 12.2% .
+\]</span></p>
+<p>In other words, what I did was to compute the highest <span class="math inline">\(\theta\)</span> for which I would be very surprised (5%) to see all negative outcomes. This is equivalent to being quite sure (95% sure) to observe at least one positive outcome.</p>
+<p>My colleague had found the formula for the <a href="http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper-Pearson_interval">Clopper-Pearson interval</a> and applied it to their case: different result. Of course, I thought: I computed the probability to observe data as extreme or more extreme than those observed for a given value of the parameter. I did a hypothesis test, not a confidence interval.</p>
+<p>It would have been the end of the story, had I not tried this <a href="http://www.danielsoper.com/statcalc3/calc.aspx?id=85">online calculator</a>. It reports <span class="math inline">\(0 \leq \theta \leq 0.12\)</span> to be the 90% interval for <span class="math inline">\(n=23\)</span>. This was no coincidence, as the plot below shows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># computing 90% confidence interval with &quot;exact&quot; meaning Clopper-Pearson</span>
+<span class="kw">library</span>(binom)
+cis &lt;-<span class="st"> </span><span class="kw">binom.confint</span>(<span class="dv">0</span>, <span class="dv">5</span>:<span class="dv">30</span>, <span class="dt">conf.level =</span> <span class="fl">0.9</span>, <span class="dt">methods=</span><span class="st">&quot;exact&quot;</span>)
+
+<span class="co"># max theta for which n all negative outcomes have probability 5%</span>
+p_all_neg &lt;-<span class="st"> </span><span class="dv">1</span><span class="fl">-0.05</span>**(<span class="dv">1</span>./<span class="dv">5</span>:<span class="dv">30</span>)
+
+<span class="kw">plot</span>(<span class="dv">5</span>:<span class="dv">30</span>, cis$upper, <span class="dt">xlab=</span><span class="st">&quot;trials&quot;</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(theta))
+<span class="kw">lines</span>(<span class="dv">5</span>:<span class="dv">30</span>, p_all_neg)</code></pre></div>
+<figure>
+<img src="/blogfigure/source/2016-06-27-confidence-interval-and-hypothesis-test/plot-1.png" alt="plot of chunk plot" /><figcaption>plot of chunk plot</figcaption>
+</figure>
+<p>In other words, for any number of tests (at least, between five and thirty) <em>my</em> estimate matches the upper limit of the 90% confidence interval computed with the Clopper-Pearson method.</p>
+<h2 id="finding-confidence-intervals">Finding confidence intervals</h2>
+<p>There is a one-to-one correspondence between confidence intervals and hypothesis tests. As a matter of fact, confidence sets are found by inverting a test statistics.</p>
+<p>Let’s start revisiting a few concepts, following the <a href="http://books.google.ch/books/about/Statistical_inference.html?id=0x_vAAAAMAAJ&amp;redir_esc=y">classics</a>. We have a hypothesis for a parameter of interest <span class="math inline">\(\theta\)</span>. The hypothesis says that it has a certain value <span class="math display">\[
+H_0 : \theta = \theta_0.
+\]</span></p>
+<p>We have data <span class="math inline">\(X\)</span> and a test statistics telling us whether to reject the hypothesis or not. The acceptance region <span class="math inline">\(A(\theta_0)\)</span> is the region of the sample space for which we do not reject <span class="math inline">\(H_0\)</span> at a level <span class="math inline">\(\alpha\)</span>. In symbols <span class="math display">\[
+p(X \in A(\theta_0)) \geq 1 - \alpha
+\]</span> or <span class="math display">\[
+p(X \notin A(\theta_0)) \leq \alpha.
+\]</span> Now, for each realisation of the data <span class="math inline">\(X\)</span>, we take the values of <span class="math inline">\(\theta\)</span> for which the hypothesis <span class="math inline">\(H_0\)</span> is accepted. Then we have built a confidence set for <span class="math inline">\(\theta\)</span>. We define <span class="math inline">\(C(X)\)</span> as the set in parameter <span class="math display">\[
+C(X)=\{\theta_0 : x \in A(\theta_0)\}.
+\]</span> Then, <span class="math inline">\(C(X)\)</span> is a <span class="math inline">\(1 - \alpha\)</span> confidence set. This follows quite immediately from the definition of acceptance region above <span class="math display">\[
+p(\theta \in C(X)) = p(X \in A(\theta_0)) \geq 1 − \alpha.
+\]</span></p>
+<h2 id="clopper-pearson-estimator">Clopper-Pearson estimator</h2>
+<p>There are several estimators for the confidence interval of the binomial proportion. The advantage of this one is that it is exact, rather than based on the normal approximation (see the Wikipedia page linked above). The disadvantage is that it is conservative, i.e. there might be a smaller interval with the same confidence level. The estimated interval is defined as <span class="math display">\[
+\{\theta : p(\mathrm{Bin}(n, \theta) \leq T) &gt; \frac{\alpha}{2} \} \cap
+\{\theta : p(\mathrm{Bin}(n, \theta) \geq T) &gt; \frac{\alpha}{2} \}.
+\]</span> From this definition we reconcile the fact that my estimate at 95% coincides with the Clopper-Pearson at 90%. In fact, since we are in the special case of <span class="math inline">\(T=0\)</span>, we can write the Clopper-Pearson as <span class="math display">\[
+\{\theta : p(\mathrm{Bin}(n, \theta) \leq 0) &gt; \frac{\alpha}{2} \} \cap
+\{\theta : p(\mathrm{Bin}(n, \theta) \geq 0) &gt; \frac{\alpha}{2} \} =
+\{\theta : p(\mathrm{Bin}(n, \theta) = 0) &gt; \frac{\alpha}{2} \}.
+\]</span> By taking <span class="math inline">\(\alpha = 0.10\)</span> in the Clopper-Pearson estimate, we have the formula I used for my estimate.</p>
+<h2 id="a-final-observation">A final observation</h2>
+<p>What is most interesting to my colleague? The hypothesis test says that those data would already exclude <span class="math inline">\(\theta=0.12\)</span> or higher at 5%, but the 95% interval according to Clopper-Pearson is <span class="math inline">\(0 \leq \theta \leq 0.15\)</span>. As we saw they are two different but intimately related things. What is more important to you depends largely on your taste. We also had the chance to underline something that is often neglected: finding an <span class="math inline">\(\alpha\)</span> confidence interval doesn’t mean we found the smallest interval that contains the true value with probability <span class="math inline">\(1 - \alpha\)</span>. If you want to investigate an extreme consequence of this, you can visit <a href="http://www.roma1.infn.it/~dagos/ci_calc.html">the ultimate confidence intervals calculator</a>.</p>
+
+
+                <hr>
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/jekyll/rstats/2014/09/28/jekyll-with-knitr/" data-toggle="tooltip" data-placement="top" title="Serve Jekyll Websites with servr and knitr">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+<hr>
+
+
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    <li>
+                        <a href="/feed.xml">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="https://www.linkedin.com/in/osvaldozagordi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li>
+                        <a href="https://github.com/ozagordi">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                    
+                    <li>
+                        <a href="mailto:firstname.lastname@gmail.com">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    
+                </ul>
+                <p class="copyright text-muted">Copyright &copy; Your/Project/Corporate Name 2016</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js "></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js "></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/clean-blog.min.js "></script>
+
+
+    
+
+
+</body>
+
+</html>
