@@ -1,0 +1,613 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sharp Bell</title>
+    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+</description>
+    <link>http://yourdomain.com/</link>
+    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Tue, 28 Jun 2016 12:51:10 +0200</pubDate>
+    <lastBuildDate>Tue, 28 Jun 2016 12:51:10 +0200</lastBuildDate>
+    <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Confidence interval and hypothesis test</title>
+        <description>&lt;h2 id=&quot;if-all-tests-are-negative-the-positive-rate-is-zero.-and-its-confidence-interval&quot;&gt;If all tests are negative, the positive rate is zero. And its confidence interval?&lt;/h2&gt;
+&lt;p&gt;Some time ago a colleague presented me a simple statistics question which, as usual, turned out to be quite interesting and intriguing. They had run 23 tests that were all negative, and they wanted to have a confidence interval for the proportion of positive outcomes. So, to put it in statistical terms, we have &lt;span class=&quot;math inline&quot;&gt;\(n\)&lt;/span&gt; observations that can be 0 or 1. Each observation has a probability &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt; of being positive. In formulas&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;math display&quot;&gt;\[
+x_i \in \{0, 1\} \quad \forall i = 1, \ldots , n \\
+p(x_i=1) = \theta .
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;We know that the number of successes is binomially distributed, thus a sufficient statistics is &lt;span class=&quot;math inline&quot;&gt;\(T = \sum_i x_i\)&lt;/span&gt; and that the maximum likelihood estimator for the binomial proprtion is &lt;span class=&quot;math display&quot;&gt;\[
+\hat{\theta} = \frac{T}{n} .
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;If the observations are all negative, the estimate for the rate is clearly zero, but what about its confidence interval? I had never been asked to estimate the confidence interval for the binomial distribution, so I was totally unprepared (shame on me!). Quite instinctively, I computed the probability to observe all 23 results negative for a given &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt;, set this to 5% and solved for &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt;. Result, 12.2%. In formula&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;math display&quot;&gt;\[
+p(\mathrm{all\;negatives}\, |\, \theta) = (1-\theta)^n \leq \alpha,
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;which gives, solving for &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt;,&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;math display&quot;&gt;\[
+\theta_u = 1 - \alpha^{1/n} \\
+\theta_u(n=23) = 12.2% .
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;In other words, what I did was to compute the highest &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt; for which I would be very surprised (5%) to see all negative outcomes. This is equivalent to being quite sure (95% sure) to observe at least one positive outcome.&lt;/p&gt;
+&lt;p&gt;My colleague had found the formula for the &lt;a href=&quot;http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper-Pearson_interval&quot;&gt;Clopper-Pearson interval&lt;/a&gt; and applied it to their case: different result. Of course, I thought: I computed the probability to observe data as extreme or more extreme than those observed for a given value of the parameter. I did a hypothesis test, not a confidence interval.&lt;/p&gt;
+&lt;p&gt;It would have been the end of the story, had I not tried this &lt;a href=&quot;http://www.danielsoper.com/statcalc3/calc.aspx?id=85&quot;&gt;online calculator&lt;/a&gt;. It reports &lt;span class=&quot;math inline&quot;&gt;\(0 \leq \theta \leq 0.12\)&lt;/span&gt; to be the 90% interval for &lt;span class=&quot;math inline&quot;&gt;\(n=23\)&lt;/span&gt;. This was no coincidence, as the plot below shows.&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# computing 90% confidence interval with &amp;quot;exact&amp;quot; meaning Clopper-Pearson&lt;/span&gt;
+&lt;span class=&quot;kw&quot;&gt;library&lt;/span&gt;(binom)
+cis &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;binom.confint&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;conf.level =&lt;/span&gt; &lt;span class=&quot;fl&quot;&gt;0.9&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;methods=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;exact&amp;quot;&lt;/span&gt;)
+
+&lt;span class=&quot;co&quot;&gt;# max theta for which n all negative outcomes have probability 5%&lt;/span&gt;
+p_all_neg &amp;lt;-&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;fl&quot;&gt;-0.05&lt;/span&gt;**(&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;./&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;)
+
+&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;, cis$upper, &lt;span class=&quot;dt&quot;&gt;xlab=&lt;/span&gt;&lt;span class=&quot;st&quot;&gt;&amp;quot;trials&amp;quot;&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;ylab=&lt;/span&gt;&lt;span class=&quot;kw&quot;&gt;expression&lt;/span&gt;(theta))
+&lt;span class=&quot;kw&quot;&gt;lines&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;5&lt;/span&gt;:&lt;span class=&quot;dv&quot;&gt;30&lt;/span&gt;, p_all_neg)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure&gt;
+&lt;img src=&quot;/blogfigure/source/2016-06-27-confidence-interval-and-hypothesis-test/plot-1.png&quot; alt=&quot;plot of chunk plot&quot; /&gt;&lt;figcaption&gt;plot of chunk plot&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;p&gt;In other words, for any number of tests (at least, between five and thirty) &lt;em&gt;my&lt;/em&gt; estimate matches the upper limit of the 90% confidence interval computed with the Clopper-Pearson method.&lt;/p&gt;
+&lt;h2 id=&quot;finding-confidence-intervals&quot;&gt;Finding confidence intervals&lt;/h2&gt;
+&lt;p&gt;There is a one-to-one correspondence between confidence intervals and hypothesis tests. As a matter of fact, confidence sets are found by inverting a test statistics.&lt;/p&gt;
+&lt;p&gt;Let’s start revisiting a few concepts, following the &lt;a href=&quot;http://books.google.ch/books/about/Statistical_inference.html?id=0x_vAAAAMAAJ&amp;amp;redir_esc=y&quot;&gt;classics&lt;/a&gt;. We have a hypothesis for a parameter of interest &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt;. The hypothesis says that it has a certain value &lt;span class=&quot;math display&quot;&gt;\[
+H_0 : \theta = \theta_0.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;We have data &lt;span class=&quot;math inline&quot;&gt;\(X\)&lt;/span&gt; and a test statistics telling us whether to reject the hypothesis or not. The acceptance region &lt;span class=&quot;math inline&quot;&gt;\(A(\theta_0)\)&lt;/span&gt; is the region of the sample space for which we do not reject &lt;span class=&quot;math inline&quot;&gt;\(H_0\)&lt;/span&gt; at a level &lt;span class=&quot;math inline&quot;&gt;\(\alpha\)&lt;/span&gt;. In symbols &lt;span class=&quot;math display&quot;&gt;\[
+p(X \in A(\theta_0)) \geq 1 - \alpha
+\]&lt;/span&gt; or &lt;span class=&quot;math display&quot;&gt;\[
+p(X \notin A(\theta_0)) \leq \alpha.
+\]&lt;/span&gt; Now, for each realisation of the data &lt;span class=&quot;math inline&quot;&gt;\(X\)&lt;/span&gt;, we take the values of &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt; for which the hypothesis &lt;span class=&quot;math inline&quot;&gt;\(H_0\)&lt;/span&gt; is accepted. Then we have built a confidence set for &lt;span class=&quot;math inline&quot;&gt;\(\theta\)&lt;/span&gt;. We define &lt;span class=&quot;math inline&quot;&gt;\(C(X)\)&lt;/span&gt; as the set in parameter &lt;span class=&quot;math display&quot;&gt;\[
+C(X)=\{\theta_0 : x \in A(\theta_0)\}.
+\]&lt;/span&gt; Then, &lt;span class=&quot;math inline&quot;&gt;\(C(X)\)&lt;/span&gt; is a &lt;span class=&quot;math inline&quot;&gt;\(1 - \alpha\)&lt;/span&gt; confidence set. This follows quite immediately from the definition of acceptance region above &lt;span class=&quot;math display&quot;&gt;\[
+p(\theta \in C(X)) = p(X \in A(\theta_0)) \geq 1 − \alpha.
+\]&lt;/span&gt;&lt;/p&gt;
+&lt;h2 id=&quot;clopper-pearson-estimator&quot;&gt;Clopper-Pearson estimator&lt;/h2&gt;
+&lt;p&gt;There are several estimators for the confidence interval of the binomial proportion. The advantage of this one is that it is exact, rather than based on the normal approximation (see the Wikipedia page linked above). The disadvantage is that it is conservative, i.e. there might be a smaller interval with the same confidence level. The estimated interval is defined as &lt;span class=&quot;math display&quot;&gt;\[
+\{\theta : p(\mathrm{Bin}(n, \theta) \leq T) &amp;gt; \frac{\alpha}{2} \} \cap
+\{\theta : p(\mathrm{Bin}(n, \theta) \geq T) &amp;gt; \frac{\alpha}{2} \}.
+\]&lt;/span&gt; From this definition we reconcile the fact that my estimate at 95% coincides with the Clopper-Pearson at 90%. In fact, since we are in the special case of &lt;span class=&quot;math inline&quot;&gt;\(T=0\)&lt;/span&gt;, we can write the Clopper-Pearson as &lt;span class=&quot;math display&quot;&gt;\[
+\{\theta : p(\mathrm{Bin}(n, \theta) \leq 0) &amp;gt; \frac{\alpha}{2} \} \cap
+\{\theta : p(\mathrm{Bin}(n, \theta) \geq 0) &amp;gt; \frac{\alpha}{2} \} =
+\{\theta : p(\mathrm{Bin}(n, \theta) = 0) &amp;gt; \frac{\alpha}{2} \}.
+\]&lt;/span&gt; By taking &lt;span class=&quot;math inline&quot;&gt;\(\alpha = 0.10\)&lt;/span&gt; in the Clopper-Pearson estimate, we have the formula I used for my estimate.&lt;/p&gt;
+&lt;h2 id=&quot;a-final-observation&quot;&gt;A final observation&lt;/h2&gt;
+&lt;p&gt;What is most interesting to my colleague? The hypothesis test says that those data would already exclude &lt;span class=&quot;math inline&quot;&gt;\(\theta=0.12\)&lt;/span&gt; or higher at 5%, but the 95% interval according to Clopper-Pearson is &lt;span class=&quot;math inline&quot;&gt;\(0 \leq \theta \leq 0.15\)&lt;/span&gt;. As we saw they are two different but intimately related things. What is more important to you depends largely on your taste. We also had the chance to underline something that is often neglected: finding an &lt;span class=&quot;math inline&quot;&gt;\(\alpha\)&lt;/span&gt; confidence interval doesn’t mean we found the smallest interval that contains the true value with probability &lt;span class=&quot;math inline&quot;&gt;\(1 - \alpha\)&lt;/span&gt;. If you want to investigate an extreme consequence of this, you can visit &lt;a href=&quot;http://www.roma1.infn.it/~dagos/ci_calc.html&quot;&gt;the ultimate confidence intervals calculator&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Jun 2016 00:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2016/06/27/confidence-interval-and-hypothesis-test/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2016/06/27/confidence-interval-and-hypothesis-test/</guid>
+        
+        <category>statistical inference</category>
+        
+        <category>nhst</category>
+        
+        <category>confindence interval</category>
+        
+        <category>binomial</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>Serve Jekyll Websites with servr and knitr</title>
+        <description>&lt;p&gt;The R package &lt;a href=&quot;https://github.com/yihui/servr&quot;&gt;&lt;strong&gt;servr&lt;/strong&gt;&lt;/a&gt; can be used to set up an HTTP server to serve files under a directory. Since &lt;strong&gt;servr&lt;/strong&gt; v0.2, it has added a function &lt;code&gt;servr::jekyll()&lt;/code&gt; specifically designed for websites based on Jekyll and R Markdown. The main features of this function are:&lt;/p&gt;
+&lt;ol type=&quot;1&quot;&gt;
+&lt;li&gt;R Markdown source files are re-compiled through &lt;a href=&quot;http://yihui.name/knitr&quot;&gt;&lt;strong&gt;knitr&lt;/strong&gt;&lt;/a&gt; when their corresponding Markdown output files become older&lt;a href=&quot;#fn1&quot; class=&quot;footnoteRef&quot; id=&quot;fnref1&quot;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; than source files;&lt;/li&gt;
+&lt;li&gt;The web page will refresh itself automatically in the above case as well;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;As a result, all you need to do is write your blog posts (R Markdown documents), and you do not need to worry about re-building the website or calling &lt;strong&gt;knitr&lt;/strong&gt; commands. Whenever you save a blog post in your text editor, the web page will be updated on the fly. This is particularly handy in the &lt;a href=&quot;http://www.rstudio.com&quot;&gt;RStudio IDE&lt;/a&gt;, because after you run &lt;code&gt;servr::jekyll()&lt;/code&gt; in the console, you can start writing or editing your R Markdown posts, and the HTML output, displayed in the RStudio viewer pane, will be in sync with your source post in the source panel (see the screenshot below).&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://i.imgur.com/gKVGhiP.png&quot;&gt;&lt;img src=&quot;http://i.imgur.com/gKVGhiP.png&quot; alt=&quot;Jekyll with servr and knitr&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;prerequisites&quot;&gt;Prerequisites&lt;/h2&gt;
+&lt;p&gt;You must have installed the packages &lt;strong&gt;servr&lt;/strong&gt; (&amp;gt;= 0.2) and &lt;strong&gt;knitr&lt;/strong&gt; (&amp;gt;= 1.8).&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;install.packages&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;#39;servr&amp;#39;&lt;/span&gt;, &lt;span class=&quot;st&quot;&gt;&amp;#39;knitr&amp;#39;&lt;/span&gt;), &lt;span class=&quot;dt&quot;&gt;repos =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;http://cran.rstudio.com&amp;#39;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Of course, you have to install &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll&lt;/a&gt; as well. For Windows users, you have to make sure &lt;code&gt;jekyll&lt;/code&gt; can be found from your environment variable &lt;code&gt;PATH&lt;/code&gt;, i.e., R can call it via &lt;code&gt;system(&#39;jekyll&#39;)&lt;/code&gt;. This is normally not an issue for Linux or Mac OS X users (&lt;code&gt;gem install jekyll&lt;/code&gt; is enough).&lt;/p&gt;
+&lt;h2 id=&quot;r-code-chunks&quot;&gt;R code chunks&lt;/h2&gt;
+&lt;p&gt;Now we write some R code chunks in this post. For example,&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;options&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;digits =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;3&lt;/span&gt;)
+&lt;span class=&quot;kw&quot;&gt;cat&lt;/span&gt;(&lt;span class=&quot;st&quot;&gt;&amp;quot;hello world!&amp;quot;&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## hello world!&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;set.seed&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;123&lt;/span&gt;)
+(&lt;span class=&quot;dt&quot;&gt;x =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;rnorm&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;40&lt;/span&gt;) +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;10&lt;/span&gt;)&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;##  [1]  9.44  9.77 11.56 10.07 10.13 11.72 10.46  8.73  9.31  9.55 11.22
+## [12] 10.36 10.40 10.11  9.44 11.79 10.50  8.03 10.70  9.53  8.93  9.78
+## [23]  8.97  9.27  9.37  8.31 10.84 10.15  8.86 11.25 10.43  9.70 10.90
+## [34] 10.88 10.82 10.69 10.55  9.94  9.69  9.62&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;co&quot;&gt;# generate a table&lt;/span&gt;
+knitr::&lt;span class=&quot;kw&quot;&gt;kable&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;head&lt;/span&gt;(mtcars))&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;table style=&quot;width:110%;&quot;&gt;
+&lt;colgroup&gt;
+&lt;col style=&quot;width: 26%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 6%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 6%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 5%&quot; /&gt;
+&lt;col style=&quot;width: 5%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;col style=&quot;width: 8%&quot; /&gt;
+&lt;/colgroup&gt;
+&lt;thead&gt;
+&lt;tr class=&quot;header&quot;&gt;
+&lt;th style=&quot;text-align: left;&quot;&gt;&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;mpg&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;cyl&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;disp&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;hp&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;drat&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;wt&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;qsec&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;vs&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;am&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;gear&lt;/th&gt;
+&lt;th style=&quot;text-align: right;&quot;&gt;carb&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Mazda RX4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;21.0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;6&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;160&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;110&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.90&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;2.62&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;16.5&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Mazda RX4 Wag&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;21.0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;6&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;160&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;110&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.90&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;2.88&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;17.0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Datsun 710&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;22.8&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;108&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;93&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.85&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;2.32&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;18.6&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Hornet 4 Drive&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;21.4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;6&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;258&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;110&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.08&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.21&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;19.4&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;odd&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Hornet Sportabout&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;18.7&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;8&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;360&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;175&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.15&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.44&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;17.0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&quot;even&quot;&gt;
+&lt;td style=&quot;text-align: left;&quot;&gt;Valiant&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;18.1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;6&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;225&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;105&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;2.76&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3.46&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;20.2&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;0&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;3&lt;/td&gt;
+&lt;td style=&quot;text-align: right;&quot;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;(function() {
+  if (&lt;span class=&quot;ot&quot;&gt;TRUE&lt;/span&gt;) &lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt; +&lt;span class=&quot;st&quot;&gt; &lt;/span&gt;&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;  &lt;span class=&quot;co&quot;&gt;# a boring comment&lt;/span&gt;
+})()&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 2&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;names&lt;/span&gt;(&lt;span class=&quot;kw&quot;&gt;formals&lt;/span&gt;(servr::jekyll))  &lt;span class=&quot;co&quot;&gt;# arguments of the jekyll() function&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;dir&amp;quot;     &amp;quot;input&amp;quot;   &amp;quot;output&amp;quot;  &amp;quot;script&amp;quot;  &amp;quot;serve&amp;quot;   &amp;quot;command&amp;quot;
+## [7] &amp;quot;...&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Just to test inline R expressions&lt;a href=&quot;#fn2&quot; class=&quot;footnoteRef&quot; id=&quot;fnref2&quot;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt; in &lt;strong&gt;knitr&lt;/strong&gt;, we know the first element in &lt;code&gt;x&lt;/code&gt; (created in the code chunk above) is 9.44. You can certainly draw some graphs as well:&lt;/p&gt;
+&lt;div class=&quot;sourceCode&quot;&gt;&lt;pre class=&quot;sourceCode r&quot;&gt;&lt;code class=&quot;sourceCode r&quot;&gt;&lt;span class=&quot;kw&quot;&gt;par&lt;/span&gt;(&lt;span class=&quot;dt&quot;&gt;mar =&lt;/span&gt; &lt;span class=&quot;kw&quot;&gt;c&lt;/span&gt;(&lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;dv&quot;&gt;4&lt;/span&gt;, .&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;, .&lt;span class=&quot;dv&quot;&gt;1&lt;/span&gt;))
+&lt;span class=&quot;kw&quot;&gt;plot&lt;/span&gt;(cars, &lt;span class=&quot;dt&quot;&gt;pch =&lt;/span&gt; &lt;span class=&quot;dv&quot;&gt;19&lt;/span&gt;, &lt;span class=&quot;dt&quot;&gt;col =&lt;/span&gt; &lt;span class=&quot;st&quot;&gt;&amp;#39;red&amp;#39;&lt;/span&gt;)  &lt;span class=&quot;co&quot;&gt;# a scatterplot&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;figure&gt;
+&lt;img src=&quot;/blogfigure/source/2014-09-28-jekyll-with-knitr/cars-1.png&quot; alt=&quot;A scatterplot of the cars data&quot; /&gt;&lt;figcaption&gt;A scatterplot of the cars data&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2 id=&quot;the-build-script&quot;&gt;The build script&lt;/h2&gt;
+&lt;p&gt;Zero-configuration is required for &lt;code&gt;servr::jekyll()&lt;/code&gt; to work on your Jekyll website. However, there is always demand for more control over some options, which can be defined in a custom build script. Here are the arguments of &lt;code&gt;servr::jekyll()&lt;/code&gt;:&lt;/p&gt;
+&lt;section class=&quot;footnotes&quot;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&quot;fn1&quot;&gt;&lt;p&gt;Determined by the modification time of files, i.e., &lt;code&gt;file.info(x)[, &#39;mtime&#39;]&lt;/code&gt;.&lt;a href=&quot;#fnref1&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&quot;fn2&quot;&gt;&lt;p&gt;The syntax in R Markdown for inline expressions is &lt;code&gt;`r code`&lt;/code&gt;, where &lt;code&gt;code&lt;/code&gt; is the R expression that you want to evaluate, e.g. &lt;code&gt;x[1]&lt;/code&gt;.&lt;a href=&quot;#fnref2&quot;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/section&gt;
+</description>
+        <pubDate>Sun, 28 Sep 2014 00:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/jekyll/rstats/2014/09/28/jekyll-with-knitr/</link>
+        <guid isPermaLink="true">http://yourdomain.com/jekyll/rstats/2014/09/28/jekyll-with-knitr/</guid>
+        
+        <category>knitr</category>
+        
+        <category>servr</category>
+        
+        <category>httpuv</category>
+        
+        <category>websocket</category>
+        
+        
+        <category>jekyll</category>
+        
+        <category>rstats</category>
+        
+      </item>
+    
+      <item>
+        <title>Man must explore, and this is exploration at its greatest</title>
+        <description>&lt;p&gt;
+Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman’s earth, if free men make it, will be truly round: a globe in practice, not in theory.
+&lt;/p&gt;
+&lt;p&gt;
+Science cuts two ways, of course; its products can be used for both good and evil. But there’s no turning back from science. The early warnings about technological dangers also come from science.
+&lt;/p&gt;
+&lt;p&gt;
+What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.
+&lt;/p&gt;
+&lt;p&gt;
+A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That’s how I felt seeing the Earth for the first time. I could not help but love and cherish her.
+&lt;/p&gt;
+&lt;p&gt;
+For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+The Final Frontier
+&lt;/h2&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;blockquote&gt;
+The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.
+&lt;/blockquote&gt;
+&lt;p&gt;
+Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+Reaching for the Stars
+&lt;/h2&gt;
+&lt;p&gt;
+As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt; &lt;img src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;Post Sample Image&quot;&gt; &lt;/a&gt; &lt;span class=&quot;caption text-muted&quot;&gt;To go places and do things that have never been done before – that’s what living is all about.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;
+Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+&lt;/p&gt;
+&lt;p&gt;
+As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.
+&lt;/p&gt;
+&lt;p&gt;
+Placeholder text by &lt;a href=&quot;http://spaceipsum.com/&quot;&gt;Space Ipsum&lt;/a&gt;. Photographs by &lt;a href=&quot;https://www.flickr.com/photos/nasacommons/&quot;&gt;NASA on The Commons&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+        <pubDate>Wed, 24 Sep 2014 14:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2014/09/24/man-must-explore/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2014/09/24/man-must-explore/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>I believe every human has a finite number of heartbeats. I don&#39;t intend to waste any of mine.</title>
+        <description>&lt;p&gt;
+Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman’s earth, if free men make it, will be truly round: a globe in practice, not in theory.
+&lt;/p&gt;
+&lt;p&gt;
+Science cuts two ways, of course; its products can be used for both good and evil. But there’s no turning back from science. The early warnings about technological dangers also come from science.
+&lt;/p&gt;
+&lt;p&gt;
+What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.
+&lt;/p&gt;
+&lt;p&gt;
+A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That’s how I felt seeing the Earth for the first time. I could not help but love and cherish her.
+&lt;/p&gt;
+&lt;p&gt;
+For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+The Final Frontier
+&lt;/h2&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;blockquote&gt;
+The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.
+&lt;/blockquote&gt;
+&lt;p&gt;
+Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+Reaching for the Stars
+&lt;/h2&gt;
+&lt;p&gt;
+As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt; &lt;img src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;Post Sample Image&quot;&gt; &lt;/a&gt; &lt;span class=&quot;caption text-muted&quot;&gt;To go places and do things that have never been done before – that’s what living is all about.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;
+Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+&lt;/p&gt;
+&lt;p&gt;
+As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.
+&lt;/p&gt;
+&lt;p&gt;
+Placeholder text by &lt;a href=&quot;http://spaceipsum.com/&quot;&gt;Space Ipsum&lt;/a&gt;. Photographs by &lt;a href=&quot;https://www.flickr.com/photos/nasacommons/&quot;&gt;NASA on The Commons&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+        <pubDate>Thu, 18 Sep 2014 14:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2014/09/18/i-believe/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2014/09/18/i-believe/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Science has not yet mastered prophecy</title>
+        <description>&lt;p&gt;
+Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman’s earth, if free men make it, will be truly round: a globe in practice, not in theory.
+&lt;/p&gt;
+&lt;p&gt;
+Science cuts two ways, of course; its products can be used for both good and evil. But there’s no turning back from science. The early warnings about technological dangers also come from science.
+&lt;/p&gt;
+&lt;p&gt;
+What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.
+&lt;/p&gt;
+&lt;p&gt;
+A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That’s how I felt seeing the Earth for the first time. I could not help but love and cherish her.
+&lt;/p&gt;
+&lt;p&gt;
+For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+The Final Frontier
+&lt;/h2&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;blockquote&gt;
+The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.
+&lt;/blockquote&gt;
+&lt;p&gt;
+Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+Reaching for the Stars
+&lt;/h2&gt;
+&lt;p&gt;
+As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt; &lt;img src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;Post Sample Image&quot;&gt; &lt;/a&gt; &lt;span class=&quot;caption text-muted&quot;&gt;To go places and do things that have never been done before – that’s what living is all about.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;
+Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+&lt;/p&gt;
+&lt;p&gt;
+As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.
+&lt;/p&gt;
+&lt;p&gt;
+Placeholder text by &lt;a href=&quot;http://spaceipsum.com/&quot;&gt;Space Ipsum&lt;/a&gt;. Photographs by &lt;a href=&quot;https://www.flickr.com/photos/nasacommons/&quot;&gt;NASA on The Commons&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+        <pubDate>Sun, 24 Aug 2014 14:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2014/08/24/science-has-not-yet-mastered-prophecy/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2014/08/24/science-has-not-yet-mastered-prophecy/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Failure is not an option</title>
+        <description>&lt;p&gt;
+Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman’s earth, if free men make it, will be truly round: a globe in practice, not in theory.
+&lt;/p&gt;
+&lt;p&gt;
+Science cuts two ways, of course; its products can be used for both good and evil. But there’s no turning back from science. The early warnings about technological dangers also come from science.
+&lt;/p&gt;
+&lt;p&gt;
+What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.
+&lt;/p&gt;
+&lt;p&gt;
+A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That’s how I felt seeing the Earth for the first time. I could not help but love and cherish her.
+&lt;/p&gt;
+&lt;p&gt;
+For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+The Final Frontier
+&lt;/h2&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;blockquote&gt;
+The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.
+&lt;/blockquote&gt;
+&lt;p&gt;
+Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+Reaching for the Stars
+&lt;/h2&gt;
+&lt;p&gt;
+As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt; &lt;img src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;Post Sample Image&quot;&gt; &lt;/a&gt; &lt;span class=&quot;caption text-muted&quot;&gt;To go places and do things that have never been done before – that’s what living is all about.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;
+Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+&lt;/p&gt;
+&lt;p&gt;
+As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.
+&lt;/p&gt;
+&lt;p&gt;
+Placeholder text by &lt;a href=&quot;http://spaceipsum.com/&quot;&gt;Space Ipsum&lt;/a&gt;. Photographs by &lt;a href=&quot;https://www.flickr.com/photos/nasacommons/&quot;&gt;NASA on The Commons&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+        <pubDate>Tue, 08 Jul 2014 14:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2014/07/08/failure-is-not-an-option/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2014/07/08/failure-is-not-an-option/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>The dreams of yesterday are the hopes of today and the reality of tomorrow.</title>
+        <description>&lt;p&gt;
+Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman’s earth, if free men make it, will be truly round: a globe in practice, not in theory.
+&lt;/p&gt;
+&lt;p&gt;
+Science cuts two ways, of course; its products can be used for both good and evil. But there’s no turning back from science. The early warnings about technological dangers also come from science.
+&lt;/p&gt;
+&lt;p&gt;
+What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.
+&lt;/p&gt;
+&lt;p&gt;
+A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That’s how I felt seeing the Earth for the first time. I could not help but love and cherish her.
+&lt;/p&gt;
+&lt;p&gt;
+For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+The Final Frontier
+&lt;/h2&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;blockquote&gt;
+The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.
+&lt;/blockquote&gt;
+&lt;p&gt;
+Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+Reaching for the Stars
+&lt;/h2&gt;
+&lt;p&gt;
+As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt; &lt;img src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;Post Sample Image&quot;&gt; &lt;/a&gt; &lt;span class=&quot;caption text-muted&quot;&gt;To go places and do things that have never been done before – that’s what living is all about.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;
+Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+&lt;/p&gt;
+&lt;p&gt;
+As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.
+&lt;/p&gt;
+&lt;p&gt;
+Placeholder text by &lt;a href=&quot;http://spaceipsum.com/&quot;&gt;Space Ipsum&lt;/a&gt;. Photographs by &lt;a href=&quot;https://www.flickr.com/photos/nasacommons/&quot;&gt;NASA on The Commons&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+        <pubDate>Tue, 01 Jul 2014 14:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2014/07/01/dreams/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2014/07/01/dreams/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Dinosaurs are extinct today</title>
+        <description>&lt;p&gt;
+Never in all their history have men been able truly to conceive of the world as one: a single sphere, a globe, having the qualities of a globe, a round earth in which all the directions eventually meet, in which there is no center because every point, or none, is center — an equal earth which all men occupy as equals. The airman’s earth, if free men make it, will be truly round: a globe in practice, not in theory.
+&lt;/p&gt;
+&lt;p&gt;
+Science cuts two ways, of course; its products can be used for both good and evil. But there’s no turning back from science. The early warnings about technological dangers also come from science.
+&lt;/p&gt;
+&lt;p&gt;
+What was most significant about the lunar voyage was not that man set foot on the Moon but that they set eye on the earth.
+&lt;/p&gt;
+&lt;p&gt;
+A Chinese tale tells of some men sent to harm a young girl who, upon seeing her beauty, become her protectors rather than her violators. That’s how I felt seeing the Earth for the first time. I could not help but love and cherish her.
+&lt;/p&gt;
+&lt;p&gt;
+For those who have seen the Earth from space, and for the hundreds and perhaps thousands more who will, the experience most certainly changes your perspective. The things that we share in our world are far more valuable than those which divide us.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+The Final Frontier
+&lt;/h2&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;p&gt;
+There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.
+&lt;/p&gt;
+&lt;blockquote&gt;
+The dreams of yesterday are the hopes of today and the reality of tomorrow. Science has not yet mastered prophecy. We predict too much for the next year and yet far too little for the next ten.
+&lt;/blockquote&gt;
+&lt;p&gt;
+Spaceflights cannot be stopped. This is not the work of any one man or even a group of men. It is a historical process which mankind is carrying out in accordance with the natural laws of human development.
+&lt;/p&gt;
+&lt;h2 class=&quot;section-heading&quot;&gt;
+Reaching for the Stars
+&lt;/h2&gt;
+&lt;p&gt;
+As we got further and further away, it [the Earth] diminished in size. Finally it shrank to the size of a marble, the most beautiful you can imagine. That beautiful, warm, living object looked so fragile, so delicate, that if you touched it with a finger it would crumble and fall apart. Seeing this has to change a man.
+&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt; &lt;img src=&quot;/img/post-sample-image.jpg&quot; alt=&quot;Post Sample Image&quot;&gt; &lt;/a&gt; &lt;span class=&quot;caption text-muted&quot;&gt;To go places and do things that have never been done before – that’s what living is all about.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;
+Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.
+&lt;/p&gt;
+&lt;p&gt;
+As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.
+&lt;/p&gt;
+&lt;p&gt;
+Placeholder text by &lt;a href=&quot;http://spaceipsum.com/&quot;&gt;Space Ipsum&lt;/a&gt;. Photographs by &lt;a href=&quot;https://www.flickr.com/photos/nasacommons/&quot;&gt;NASA on The Commons&lt;/a&gt;.
+&lt;/p&gt;
+</description>
+        <pubDate>Tue, 10 Jun 2014 14:00:00 +0200</pubDate>
+        <link>http://yourdomain.com/2014/06/10/dinosaurs/</link>
+        <guid isPermaLink="true">http://yourdomain.com/2014/06/10/dinosaurs/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
