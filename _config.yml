@@ -19,7 +19,7 @@ linkedin_username: osvaldozagordi
 # google_tracking_id:
 
 # Build settings
-markdown: Pandoc
+markdown: kramdown
 highlighter: rouge
 permalink: pretty
 paginate: 5

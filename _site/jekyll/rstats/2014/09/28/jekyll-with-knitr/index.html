@@ -100,170 +100,204 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p>The R package <a href="https://github.com/yihui/servr"><strong>servr</strong></a> can be used to set up an HTTP server to serve files under a directory. Since <strong>servr</strong> v0.2, it has added a function <code>servr::jekyll()</code> specifically designed for websites based on Jekyll and R Markdown. The main features of this function are:</p>
-<ol type="1">
-<li>R Markdown source files are re-compiled through <a href="http://yihui.name/knitr"><strong>knitr</strong></a> when their corresponding Markdown output files become older<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> than source files;</li>
-<li>The web page will refresh itself automatically in the above case as well;</li>
+				<p>The R package <a href="https://github.com/yihui/servr"><strong>servr</strong></a> can be used to set up an HTTP server to serve files under a directory. Since <strong>servr</strong> v0.2, it has added a function <code class="highlighter-rouge">servr::jekyll()</code> specifically designed for websites based on Jekyll and R Markdown. The main features of this function are:</p>
+
+<ol>
+  <li>R Markdown source files are re-compiled through <a href="http://yihui.name/knitr"><strong>knitr</strong></a> when their corresponding Markdown output files become older<sup id="fnref:1"><a href="#fn:1" class="footnote">1</a></sup> than source files;</li>
+  <li>The web page will refresh itself automatically in the above case as well;</li>
 </ol>
-<p>As a result, all you need to do is write your blog posts (R Markdown documents), and you do not need to worry about re-building the website or calling <strong>knitr</strong> commands. Whenever you save a blog post in your text editor, the web page will be updated on the fly. This is particularly handy in the <a href="http://www.rstudio.com">RStudio IDE</a>, because after you run <code>servr::jekyll()</code> in the console, you can start writing or editing your R Markdown posts, and the HTML output, displayed in the RStudio viewer pane, will be in sync with your source post in the source panel (see the screenshot below).</p>
+
+<p>As a result, all you need to do is write your blog posts (R Markdown documents), and you do not need to worry about re-building the website or calling <strong>knitr</strong> commands. Whenever you save a blog post in your text editor, the web page will be updated on the fly. This is particularly handy in the <a href="http://www.rstudio.com">RStudio IDE</a>, because after you run <code class="highlighter-rouge">servr::jekyll()</code> in the console, you can start writing or editing your R Markdown posts, and the HTML output, displayed in the RStudio viewer pane, will be in sync with your source post in the source panel (see the screenshot below).</p>
+
 <p><a href="http://i.imgur.com/gKVGhiP.png"><img src="http://i.imgur.com/gKVGhiP.png" alt="Jekyll with servr and knitr" /></a></p>
+
 <h2 id="prerequisites">Prerequisites</h2>
+
 <p>You must have installed the packages <strong>servr</strong> (&gt;= 0.2) and <strong>knitr</strong> (&gt;= 1.8).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&#39;servr&#39;</span>, <span class="st">&#39;knitr&#39;</span>), <span class="dt">repos =</span> <span class="st">&#39;http://cran.rstudio.com&#39;</span>)</code></pre></div>
-<p>Of course, you have to install <a href="http://jekyllrb.com">Jekyll</a> as well. For Windows users, you have to make sure <code>jekyll</code> can be found from your environment variable <code>PATH</code>, i.e., R can call it via <code>system('jekyll')</code>. This is normally not an issue for Linux or Mac OS X users (<code>gem install jekyll</code> is enough).</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">install.packages</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s1">'servr'</span><span class="p">,</span><span class="w"> </span><span class="s1">'knitr'</span><span class="p">),</span><span class="w"> </span><span class="n">repos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'http://cran.rstudio.com'</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Of course, you have to install <a href="http://jekyllrb.com">Jekyll</a> as well. For Windows users, you have to make sure <code class="highlighter-rouge">jekyll</code> can be found from your environment variable <code class="highlighter-rouge">PATH</code>, i.e., R can call it via <code class="highlighter-rouge">system('jekyll')</code>. This is normally not an issue for Linux or Mac OS X users (<code class="highlighter-rouge">gem install jekyll</code> is enough).</p>
+
 <h2 id="r-code-chunks">R code chunks</h2>
+
 <p>Now we write some R code chunks in this post. For example,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">digits =</span> <span class="dv">3</span>)
-<span class="kw">cat</span>(<span class="st">&quot;hello world!&quot;</span>)</code></pre></div>
-<pre><code>## hello world!</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
-(<span class="dt">x =</span> <span class="kw">rnorm</span>(<span class="dv">40</span>) +<span class="st"> </span><span class="dv">10</span>)</code></pre></div>
-<pre><code>##  [1]  9.44  9.77 11.56 10.07 10.13 11.72 10.46  8.73  9.31  9.55 11.22
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">options</span><span class="p">(</span><span class="n">digits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="n">cat</span><span class="p">(</span><span class="s2">"hello world!"</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## hello world!
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">set.seed</span><span class="p">(</span><span class="m">123</span><span class="p">)</span><span class="w">
+</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rnorm</span><span class="p">(</span><span class="m">40</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>##  [1]  9.44  9.77 11.56 10.07 10.13 11.72 10.46  8.73  9.31  9.55 11.22
 ## [12] 10.36 10.40 10.11  9.44 11.79 10.50  8.03 10.70  9.53  8.93  9.78
 ## [23]  8.97  9.27  9.37  8.31 10.84 10.15  8.86 11.25 10.43  9.70 10.90
-## [34] 10.88 10.82 10.69 10.55  9.94  9.69  9.62</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># generate a table</span>
-knitr::<span class="kw">kable</span>(<span class="kw">head</span>(mtcars))</code></pre></div>
-<table style="width:110%;">
-<colgroup>
-<col style="width: 26%" />
-<col style="width: 8%" />
-<col style="width: 6%" />
-<col style="width: 8%" />
-<col style="width: 6%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 5%" />
-<col style="width: 5%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;"></th>
-<th style="text-align: right;">mpg</th>
-<th style="text-align: right;">cyl</th>
-<th style="text-align: right;">disp</th>
-<th style="text-align: right;">hp</th>
-<th style="text-align: right;">drat</th>
-<th style="text-align: right;">wt</th>
-<th style="text-align: right;">qsec</th>
-<th style="text-align: right;">vs</th>
-<th style="text-align: right;">am</th>
-<th style="text-align: right;">gear</th>
-<th style="text-align: right;">carb</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Mazda RX4</td>
-<td style="text-align: right;">21.0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.90</td>
-<td style="text-align: right;">2.62</td>
-<td style="text-align: right;">16.5</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Mazda RX4 Wag</td>
-<td style="text-align: right;">21.0</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">160</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.90</td>
-<td style="text-align: right;">2.88</td>
-<td style="text-align: right;">17.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">4</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Datsun 710</td>
-<td style="text-align: right;">22.8</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">108</td>
-<td style="text-align: right;">93</td>
-<td style="text-align: right;">3.85</td>
-<td style="text-align: right;">2.32</td>
-<td style="text-align: right;">18.6</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">4</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Hornet 4 Drive</td>
-<td style="text-align: right;">21.4</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">258</td>
-<td style="text-align: right;">110</td>
-<td style="text-align: right;">3.08</td>
-<td style="text-align: right;">3.21</td>
-<td style="text-align: right;">19.4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Hornet Sportabout</td>
-<td style="text-align: right;">18.7</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">360</td>
-<td style="text-align: right;">175</td>
-<td style="text-align: right;">3.15</td>
-<td style="text-align: right;">3.44</td>
-<td style="text-align: right;">17.0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">2</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Valiant</td>
-<td style="text-align: right;">18.1</td>
-<td style="text-align: right;">6</td>
-<td style="text-align: right;">225</td>
-<td style="text-align: right;">105</td>
-<td style="text-align: right;">2.76</td>
-<td style="text-align: right;">3.46</td>
-<td style="text-align: right;">20.2</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">1</td>
-</tr>
-</tbody>
+## [34] 10.88 10.82 10.69 10.55  9.94  9.69  9.62
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="c1"># generate a table
+</span><span class="n">knitr</span><span class="o">::</span><span class="n">kable</span><span class="p">(</span><span class="n">head</span><span class="p">(</span><span class="n">mtcars</span><span class="p">))</span><span class="w">
+</span></code></pre>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left"> </th>
+      <th style="text-align: right">mpg</th>
+      <th style="text-align: right">cyl</th>
+      <th style="text-align: right">disp</th>
+      <th style="text-align: right">hp</th>
+      <th style="text-align: right">drat</th>
+      <th style="text-align: right">wt</th>
+      <th style="text-align: right">qsec</th>
+      <th style="text-align: right">vs</th>
+      <th style="text-align: right">am</th>
+      <th style="text-align: right">gear</th>
+      <th style="text-align: right">carb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Mazda RX4</td>
+      <td style="text-align: right">21.0</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">160</td>
+      <td style="text-align: right">110</td>
+      <td style="text-align: right">3.90</td>
+      <td style="text-align: right">2.62</td>
+      <td style="text-align: right">16.5</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Mazda RX4 Wag</td>
+      <td style="text-align: right">21.0</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">160</td>
+      <td style="text-align: right">110</td>
+      <td style="text-align: right">3.90</td>
+      <td style="text-align: right">2.88</td>
+      <td style="text-align: right">17.0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">4</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Datsun 710</td>
+      <td style="text-align: right">22.8</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">108</td>
+      <td style="text-align: right">93</td>
+      <td style="text-align: right">3.85</td>
+      <td style="text-align: right">2.32</td>
+      <td style="text-align: right">18.6</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Hornet 4 Drive</td>
+      <td style="text-align: right">21.4</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">258</td>
+      <td style="text-align: right">110</td>
+      <td style="text-align: right">3.08</td>
+      <td style="text-align: right">3.21</td>
+      <td style="text-align: right">19.4</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">1</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Hornet Sportabout</td>
+      <td style="text-align: right">18.7</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">360</td>
+      <td style="text-align: right">175</td>
+      <td style="text-align: right">3.15</td>
+      <td style="text-align: right">3.44</td>
+      <td style="text-align: right">17.0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">2</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Valiant</td>
+      <td style="text-align: right">18.1</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: right">225</td>
+      <td style="text-align: right">105</td>
+      <td style="text-align: right">2.76</td>
+      <td style="text-align: right">3.46</td>
+      <td style="text-align: right">20.2</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">1</td>
+    </tr>
+  </tbody>
 </table>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(function() {
-  if (<span class="ot">TRUE</span>) <span class="dv">1</span> +<span class="st"> </span><span class="dv">1</span>  <span class="co"># a boring comment</span>
-})()</code></pre></div>
-<pre><code>## [1] 2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(<span class="kw">formals</span>(servr::jekyll))  <span class="co"># arguments of the jekyll() function</span></code></pre></div>
-<pre><code>## [1] &quot;dir&quot;     &quot;input&quot;   &quot;output&quot;  &quot;script&quot;  &quot;serve&quot;   &quot;command&quot;
-## [7] &quot;...&quot;</code></pre>
-<p>Just to test inline R expressions<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> in <strong>knitr</strong>, we know the first element in <code>x</code> (created in the code chunk above) is 9.44. You can certainly draw some graphs as well:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">1</span>, .<span class="dv">1</span>))
-<span class="kw">plot</span>(cars, <span class="dt">pch =</span> <span class="dv">19</span>, <span class="dt">col =</span> <span class="st">&#39;red&#39;</span>)  <span class="co"># a scatterplot</span></code></pre></div>
-<figure>
-<img src="/blogfigure/source/2014-09-28-jekyll-with-knitr/cars-1.png" alt="A scatterplot of the cars data" /><figcaption>A scatterplot of the cars data</figcaption>
-</figure>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="p">(</span><span class="k">function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="kc">TRUE</span><span class="p">)</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="m">1</span><span class="w">  </span><span class="c1"># a boring comment
+</span><span class="p">})()</span><span class="w">
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] 2
+</code></pre>
+</div>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="nf">names</span><span class="p">(</span><span class="n">formals</span><span class="p">(</span><span class="n">servr</span><span class="o">::</span><span class="n">jekyll</span><span class="p">))</span><span class="w">  </span><span class="c1"># arguments of the jekyll() function
+</span></code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## [1] "dir"     "input"   "output"  "script"  "serve"   "command"
+## [7] "..."
+</code></pre>
+</div>
+
+<p>Just to test inline R expressions<sup id="fnref:2"><a href="#fn:2" class="footnote">2</a></sup> in <strong>knitr</strong>, we know the first element in <code class="highlighter-rouge">x</code> (created in the code chunk above) is 9.44. You can certainly draw some graphs as well:</p>
+
+<div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">par</span><span class="p">(</span><span class="n">mar</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">.1</span><span class="p">,</span><span class="w"> </span><span class="m">.1</span><span class="p">))</span><span class="w">
+</span><span class="n">plot</span><span class="p">(</span><span class="n">cars</span><span class="p">,</span><span class="w"> </span><span class="n">pch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">19</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'red'</span><span class="p">)</span><span class="w">  </span><span class="c1"># a scatterplot
+</span></code></pre>
+</div>
+
+<p><img src="/blogfigure/source/2014-09-28-jekyll-with-knitr/cars-1.png" alt="A scatterplot of the cars data" /></p>
+
 <h2 id="the-build-script">The build script</h2>
-<p>Zero-configuration is required for <code>servr::jekyll()</code> to work on your Jekyll website. However, there is always demand for more control over some options, which can be defined in a custom build script. Here are the arguments of <code>servr::jekyll()</code>:</p>
-<section class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>Determined by the modification time of files, i.e., <code>file.info(x)[, 'mtime']</code>.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>The syntax in R Markdown for inline expressions is <code>`r code`</code>, where <code>code</code> is the R expression that you want to evaluate, e.g. <code>x[1]</code>.<a href="#fnref2">↩</a></p></li>
-</ol>
-</section>
+
+<p>Zero-configuration is required for <code class="highlighter-rouge">servr::jekyll()</code> to work on your Jekyll website. However, there is always demand for more control over some options, which can be defined in a custom build script. Here are the arguments of <code class="highlighter-rouge">servr::jekyll()</code>:</p>
+
+<div class="footnotes">
+  <ol>
+    <li id="fn:1">
+      <p>Determined by the modification time of files, i.e., <code class="highlighter-rouge">file.info(x)[, 'mtime']</code>. <a href="#fnref:1" class="reversefootnote">&#8617;</a></p>
+    </li>
+    <li id="fn:2">
+      <p>The syntax in R Markdown for inline expressions is <code class="highlighter-rouge">`r code`</code>, where <code class="highlighter-rouge">code</code> is the R expression that you want to evaluate, e.g. <code class="highlighter-rouge">x[1]</code>. <a href="#fnref:2" class="reversefootnote">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
 
                 <hr>
