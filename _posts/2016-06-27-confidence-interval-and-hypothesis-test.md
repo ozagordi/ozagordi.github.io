@@ -73,7 +73,7 @@ plot(5:30, cis$upper, xlab="trials", ylab=expression(theta))
 lines(5:30, p_all_neg)
 ```
 
-![plot of chunk plot](/blogfigure/source/2016-06-27-confidence-interval-and-hypothesis-test/plot-1.png)
+![plot of chunk plot](/figure/source/2016-06-27-confidence-interval-and-hypothesis-test/plot-1.png)
 
 In other words, for any number of tests (at least, between five and thirty)
 _my_ estimate matches the upper limit of the 90% confidence interval computed
