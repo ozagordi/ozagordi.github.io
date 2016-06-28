@@ -1,0 +1,36 @@
+# Site settings
+title: Sharp Bell
+header-img: img/home-bg.jpg
+email_username: firstname.lastname@gmail.com
+copyright_name: Your/Project/Corporate Name
+description: > # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+baseurl: ""
+url: "http://yourdomain.com"
+#twitter_username: SBootstrap
+github_username: ozagordi
+linkedin_username: osvaldozagordi
+#facebook_username: IronSummitMedia
+
+# Google Analytics
+# To enable google analytics, uncomment below line with a valid Google Tracking ID
+# google_tracking_id:
+
+# Build settings
+markdown: Pandoc
+highlighter: rouge
+permalink: pretty
+paginate: 5
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","contact.html"]
+gems:
+    - jekyll-paginate
+    - jekyll-feed
+    - jekyll-pandoc
+pandoc:
+  extensions:
+    - normalize
+    - smart
+    - mathjax
+    - csl: _styles/apa.csl
