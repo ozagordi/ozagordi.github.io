@@ -7,11 +7,16 @@
 body {
   font-family: 'Lora', 'Times New Roman', serif;
   font-size: 20px;
-  color: #404040;
+  background-color: #fdf6e3;
+  /*color: #404040;*/
+
 }
 p {
   line-height: 1.5;
+  font-family: 'Abel', sans-serif;
+  font-weight: lighter;
   margin: 30px 0;
+  color: #657b83;
 }
 p a {
   text-decoration: underline;
@@ -22,8 +27,9 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Abel', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 800;
+  color: #268bd2;
 }
 a {
   color: #404040;
@@ -44,10 +50,11 @@ hr.small {
   max-width: 100px;
   margin: 15px auto;
   border-width: 4px;
-  border-color: white;
+  border-color: #268bd2;
+  color: #268bd2;
 }
 .navbar-custom {
-  background: white;
+  background: #eee8d5;
   position: absolute;
   top: 0;
   left: 0;
@@ -70,7 +77,7 @@ hr.small {
     border-bottom: 1px solid transparent;
   }
   .navbar-custom .navbar-brand {
-    color: white;
+    color: #eee8d5;
     padding: 20px;
   }
   .navbar-custom .navbar-brand:hover,
@@ -170,7 +177,8 @@ hr.small {
   font-size: 24px;
   line-height: 1.1;
   display: block;
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Abel', 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #268bd2;
   font-weight: 300;
   margin: 10px 0 0;
 }
@@ -356,7 +364,7 @@ form .row:first-child .floating-label-form-group {
   font-weight: 800;
   letter-spacing: 1px;
   padding: 10px 5px;
-  background-color: white;
+  background-color: #eee8d5;
   border-radius: 0;
 }
 @media only screen and (min-width: 768px) {
