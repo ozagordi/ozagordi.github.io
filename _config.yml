@@ -4,9 +4,9 @@ header-img: img/home-bg.jpg
 email_username: firstname.lastname@gmail.com
 copyright_name: Osvaldo Zagordi
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  Personal blog of Osvaldo Zagordi, data scientist at University of Zurich and
+  founder of enGene Statistics. Data science, statistics, science, machine
+  learning, python, R and so on.
 baseurl:
 url: "https://ozagordi.github.io"
 #twitter_username: SBootstrap
@@ -16,7 +16,7 @@ linkedin_username: osvaldozagordi
 
 # Google Analytics
 # To enable google analytics, uncomment below line with a valid Google Tracking ID
-# google_tracking_id:
+google_tracking_id: 'UA-80133486-1'
 
 # Build settings
 markdown: kramdown
