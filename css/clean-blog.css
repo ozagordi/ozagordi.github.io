@@ -21,7 +21,10 @@ p {
 p a {
   text-decoration: underline;
 }
-h1,
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    color: #268bd2;
+}
 h2,
 h3,
 h4,
@@ -32,7 +35,8 @@ h6 {
   color: #268bd2;
 }
 a {
-  color: #404040;
+/*  color: #404040;*/
+  color: #93a1a1;
 }
 a:hover,
 a:focus {
@@ -70,6 +74,8 @@ hr.small {
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
+  color: #657b83;
+
 }
 @media only screen and (min-width: 768px) {
   .navbar-custom {
@@ -77,20 +83,22 @@ hr.small {
     border-bottom: 1px solid transparent;
   }
   .navbar-custom .navbar-brand {
-    color: #eee8d5;
+    color: #657b83;
     padding: 20px;
   }
   .navbar-custom .navbar-brand:hover,
   .navbar-custom .navbar-brand:focus {
-    color: rgba(255, 255, 255, 0.8);
+    /*color: rgba(255, 255, 255, 0.8);*/
+    color: #268bd2;
+
   }
   .navbar-custom .nav li a {
-    color: white;
+    color: #657b83;
     padding: 20px;
   }
   .navbar-custom .nav li a:hover,
   .navbar-custom .nav li a:focus {
-    color: rgba(255, 255, 255, 0.8);
+    color: #93a1a1;
   }
 }
 @media only screen and (min-width: 1170px) {
@@ -228,9 +236,10 @@ hr.small {
   color: #0085a1;
 }
 .post-preview > a > .post-title {
-  font-size: 30px;
-  margin-top: 30px;
-  margin-bottom: 10px;
+    font-family: 'Abel', sans-serif;
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 10px;
 }
 .post-preview > a > .post-subtitle {
   margin: 0;

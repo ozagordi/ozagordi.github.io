@@ -9,6 +9,20 @@ module.exports = function(grunt) {
                 dest: 'js/<%= pkg.name %>.min.js'
             }
         },
+        cssmin: {
+          options: {
+              // TODO: disable `zeroUnits` optimization once clean-css 3.2 is released
+              //    and then simplify the fix for https://github.com/twbs/bootstrap/issues/14837 accordingly
+            //   compatibility: 'ie8',
+            //   keepSpecialComments: '*',
+            sourceMap: true,
+            //   advanced: false
+            },
+            minifyBootstrap: {
+                src: 'css/bootstrap.css',
+                dest: 'css/bootstrap.min.css'
+            },
+        },
         less: {
             expanded: {
                 options: {
@@ -67,8 +81,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     // Default task(s).
-    grunt.registerTask('default', ['uglify', 'less', 'usebanner']);
+    grunt.registerTask('default', ['uglify', 'less', 'usebanner', 'cssmin:minifyBootstrap']);
 
 };

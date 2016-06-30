@@ -12,6 +12,7 @@ html {
 }
 body {
   margin: 0;
+  background-color: #fdf6e3;
 }
 article,
 aside,
@@ -1605,8 +1606,8 @@ pre code {
   }
 }
 .container-fluid {
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 1px;
+  padding-left: 1px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -3482,7 +3483,7 @@ input[type="button"].btn-block {
 }
 .collapse.in {
   display: block;
-  background-color: red;
+  background-color: white;
 }
 tr.collapse.in {
   display: table-row;
@@ -4185,6 +4186,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .navbar-collapse {
+    background-color: #fdf6e3;
   padding-right: 15px;
   padding-left: 15px;
   overflow-x: visible;
@@ -4233,6 +4235,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .container-fluid > .navbar-header,
 .container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
+    background-color: #fdf6e3;
   margin-right: -15px;
   margin-left: -15px;
 }
@@ -4282,6 +4285,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   padding: 15px 15px;
   font-size: 18px;
   line-height: 20px;
+  color: #657b83;
 }
 .navbar-brand:hover,
 .navbar-brand:focus {
