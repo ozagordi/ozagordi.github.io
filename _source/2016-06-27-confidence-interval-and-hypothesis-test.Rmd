@@ -61,7 +61,14 @@ It would have been the end of the story, had I not tried this
 It reports $$0 \leq \theta \leq 0.12$$ to be the 90% interval for $$n=23$$.
 This was no coincidence, as the plot below shows.
 
+In other words, for any number of tests (at least, between five and thirty)
+_my_ estimate (violet points) matches the upper limit of the 90% confidence
+interval computed with the Clopper-Pearson method (magenta line).
+
 ```{r plot}
+library(ggplot2)
+library(ggthemes)
+
 # computing 90% confidence interval with "exact" meaning Clopper-Pearson
 library(binom)
 cis <- binom.confint(0, 5:30, conf.level = 0.9, methods="exact")
@@ -69,13 +76,20 @@ cis <- binom.confint(0, 5:30, conf.level = 0.9, methods="exact")
 # max theta for which n all negative outcomes have probability 5%
 p_all_neg <- 1-0.05**(1./5:30)
 
-plot(5:30, cis$upper, xlab="trials", ylab=expression(theta))
-lines(5:30, p_all_neg)
+df <- data.frame(x=5:30, y1=cis$upper, y2=p_all_neg)
+p <- ggplot(df, aes(x)) +
+  geom_line(y = df$y1, show.legend = TRUE, colour='#d33682') +
+  geom_point(y = df$y2, show.legend = TRUE, colour='#6c71c4') +
+  xlab("trials") +
+  ylab(expression(theta)) +
+  ylim(0.0, 0.5) +
+  theme_solarized() +
+  theme(axis.title.x = element_text(face="bold", colour="#268bd2", size=16),
+        axis.text.x  = element_text(angle=0, vjust=0.0, size=14),
+        axis.title.y = element_text(face="bold", colour="#268bd2", size=16),
+        axis.text.y  = element_text(angle=0, vjust=0.0, size=14))
+print(p)
 ```
-
-In other words, for any number of tests (at least, between five and thirty)
-_my_ estimate matches the upper limit of the 90% confidence interval computed
-with the Clopper-Pearson method.
 
 ## Finding confidence intervals
 

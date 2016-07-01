@@ -20,7 +20,10 @@ google_tracking_id: 'UA-80133486-1'
 
 # Build settings
 markdown: kramdown
-highlighter: rouge
+#kramdown:
+#  input: GFM
+#  syntax_highlighter: rouge
+#highlighter: rouge
 permalink: pretty
 paginate: 5
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md","contact.html"]
