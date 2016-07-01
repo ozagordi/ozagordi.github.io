@@ -4,10 +4,13 @@ local({
   knitr::opts_knit$set(base.url = baseurl)
   # fall back on 'kramdown' if markdown engine is not specified
   markdown = servr:::jekyll_config('.', 'markdown', 'kramdown')
+  # use knitr::render_markdown, otherwise the R code chunk collapses on one line
+  knitr::render_markdown()
   # see if we need to use the Jekyll render in knitr
-  if (markdown == 'kramdown') {
-    knitr::render_jekyll()
-  } else knitr::render_markdown()
+  # if (markdown == 'kramdown') {
+  #   #knitr::render_jekyll()
+  #   knitr::render_markdown()
+  # } else knitr::render_markdown()
   print(baseurl)
   # input/output filenames are passed as two additional arguments to Rscript
   a = commandArgs(TRUE)

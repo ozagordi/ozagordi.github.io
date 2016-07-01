@@ -6,7 +6,8 @@ local({
   markdown = servr:::jekyll_config('.', 'markdown', 'kramdown')
   # see if we need to use the Jekyll render in knitr
   if (markdown == 'kramdown') {
-    knitr::render_jekyll()
+    #knitr::render_jekyll()
+    knitr::render_markdown()
   } else knitr::render_markdown()
   print(baseurl)
   # input/output filenames are passed as two additional arguments to Rscript

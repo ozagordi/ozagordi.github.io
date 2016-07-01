@@ -66,7 +66,7 @@ _my_ estimate (violet points) matches the upper limit of the 90% confidence
 interval computed with the Clopper-Pearson method (magenta line).
 
 
-{% highlight r %}
+```r
 library(ggplot2)
 library(ggthemes)
 
@@ -90,7 +90,7 @@ p <- ggplot(df, aes(x)) +
         axis.title.y = element_text(face="bold", colour="#268bd2", size=16),
         axis.text.y  = element_text(angle=0, vjust=0.0, size=14))
 print(p)
-{% endhighlight %}
+```
 
 ![plot of chunk plot](/figure/source/2016-06-27-confidence-interval-and-hypothesis-test/plot-1.png)
 
