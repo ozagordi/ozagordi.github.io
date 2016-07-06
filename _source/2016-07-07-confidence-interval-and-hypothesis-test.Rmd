@@ -65,10 +65,10 @@ In other words, for any number of tests (at least, between five and thirty)
 _my_ estimate (violet points) matches the upper limit of the 90% confidence
 interval computed with the Clopper-Pearson method (magenta line).
 
-
-```r
+```{r plot}
 library(ggplot2)
-library(ggthemes)
+library(ggthemr)
+ggthemr('solarized')
 
 # computing 90% confidence interval with "exact" meaning Clopper-Pearson
 library(binom)
@@ -91,8 +91,6 @@ p <- ggplot(df, aes(x)) +
         axis.text.y  = element_text(angle=0, vjust=0.0, size=14))
 print(p)
 ```
-
-![plot of chunk plot](/figure/source/2016-06-27-confidence-interval-and-hypothesis-test/plot-1.png)
 
 ## Finding confidence intervals
 
