@@ -2,7 +2,7 @@
 layout: page
 title: "About"
 description: "This is how I came here."
-header-img: "img/about-bg.jpg"
+header-img: "img/header_na.jpg"
 ---
 
 I studied physics, both master and PhD. Then I took a postdoc position at
