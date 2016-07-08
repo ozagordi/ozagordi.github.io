@@ -29,25 +29,18 @@ impress/humiliate others with some "theorem dropping".
 ```{r, echo=FALSE}
 library(ggplot2)
 library(ggthemr)
+ggthemr('solarized', type='outer')
 
-x=seq(-10, 10, by = 0.1)
+x=seq(-3, 3, by = 0.05)
 y=(exp(x) - exp(-x)) / (exp(x) + exp(-x))
 df <- data.frame(x=x, y=y)
-ggthemr('solarized')
+
 p <- ggplot(df, aes(x, y)) + geom_line() +
-  theme(#axis.line=element_blank(),
-      #axis.text.x=element_blank(),
-      #axis.text.y=element_blank(),
-      #axis.ticks=element_blank(),
-      axis.title.x=element_blank(),
-      axis.title.y=element_blank(),
-      legend.position="none",
-      #panel.background=element_blank(),
-      #panel.border=element_blank(),
-      #panel.grid.major=element_blank(),
-      panel.grid.minor=element_blank()
-      #plot.background=element_blank()
-      )
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.position="none",
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14))
 print(p)
 
 ```
@@ -55,4 +48,15 @@ print(p)
 So, if you had to choose one single concept that a person absolutely needs to
 grasp before endeavouring in data analysis, what should this concept be?
 
-I believe it is the concept of function in mathematics. 
+This is a very different question from the one Feynman answered. I am now asking
+what is the concept that is absolutely needed to understand methods and results
+in data analysis **explained by someone who knows it**, not the single notion
+that would help the most a new civilization rebuilding science from scratch.
+
+I cannot imagine a more pervasive and fundamental concept than that of function
+in mathematics. From plotting any kind of results, to writing even the simplest
+program, anything is hard or impossible to understand without this type of
+abstraction.
+
+
+_Header image from [Flickr](https://flic.kr/p/ecpHBw)_

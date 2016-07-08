@@ -6,9 +6,175 @@
 </description>
     <link>https://ozagordi.github.io/</link>
     <atom:link href="https://ozagordi.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 06 Jul 2016 10:55:49 +0200</pubDate>
-    <lastBuildDate>Wed, 06 Jul 2016 10:55:49 +0200</lastBuildDate>
+    <pubDate>Fri, 08 Jul 2016 16:04:24 +0200</pubDate>
+    <lastBuildDate>Fri, 08 Jul 2016 16:04:24 +0200</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Confidence interval and hypothesis test</title>
+        <description>&lt;h2 id=&quot;if-all-tests-are-negative-the-positive-rate-is-zero-and-its-confidence-interval&quot;&gt;If all tests are negative, the positive rate is zero. And its confidence interval?&lt;/h2&gt;
+
+&lt;p&gt;Some time ago a colleague presented me a simple statistics question which, as
+usual, turned out to be quite interesting and intriguing. They had run 23 tests
+that were all negative, and they wanted to have a confidence interval for the
+proportion of positive outcomes. So, to put it in statistical terms, we have
+&lt;script type=&quot;math/tex&quot;&gt;n&lt;/script&gt; observations that can be 0 or 1. Each observation has a probability
+&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; of being positive. In formulas&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;x_i \in \{0, 1\} \quad \forall i = 1, \ldots , n \\
+p(x_i=1) = \theta .&lt;/script&gt;
+
+&lt;p&gt;We know that the number of successes is binomially distributed, thus a
+sufficient statistics is &lt;script type=&quot;math/tex&quot;&gt;T = \sum_i x_i&lt;/script&gt; and that the maximum likelihood
+estimator for the binomial proportion is&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\hat{\theta} = \frac{T}{n} .&lt;/script&gt;
+
+&lt;p&gt;If the observations are all negative, the estimate for the rate is clearly zero,
+but what about its confidence interval? I had never been asked to estimate the
+confidence interval for the binomial distribution, so I was totally unprepared
+(shame on me!). Quite instinctively, I computed the probability to observe all
+23 results negative for a given &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;, set this to 5% and solved for
+&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;. Result, 12.2%. In formula&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\mathrm{all\;negatives}\, |\, \theta) = (1-\theta)^n \leq \alpha,&lt;/script&gt;
+
+&lt;p&gt;which gives, solving for &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\theta_u = 1 - \alpha^{1/n} \\
+\theta_u(n=23) = 12.2% .&lt;/script&gt;
+
+&lt;p&gt;In other words, what I did was to compute the highest &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; for which I
+would be very surprised (5%) to see all negative outcomes. This is equivalent
+to being quite sure (95% sure) to observe at least one positive outcome.&lt;/p&gt;
+
+&lt;p&gt;My colleague had found the formula for the
+&lt;a href=&quot;http://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Clopper-Pearson_interval&quot;&gt;Clopper-Pearson interval&lt;/a&gt;
+and applied it to their case: different result. Of course, I thought: I
+computed the probability to observe data as extreme or more extreme than those
+observed for a given value of the parameter. I did a hypothesis test, not a
+confidence interval.&lt;/p&gt;
+
+&lt;p&gt;It would have been the end of the story, had I not tried this
+&lt;a href=&quot;http://www.danielsoper.com/statcalc3/calc.aspx?id=85&quot;&gt;online calculator&lt;/a&gt;.
+It reports &lt;script type=&quot;math/tex&quot;&gt;0 \leq \theta \leq 0.12&lt;/script&gt; to be the 90% interval for &lt;script type=&quot;math/tex&quot;&gt;n=23&lt;/script&gt;.
+This was no coincidence, as the plot below shows.&lt;/p&gt;
+
+&lt;p&gt;In other words, for any number of tests (at least, between five and thirty)
+&lt;em&gt;my&lt;/em&gt; estimate (violet points) matches the upper limit of the 90% confidence
+interval computed with the Clopper-Pearson method (magenta line).&lt;/p&gt;
+
+&lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggthemr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggthemr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;solarized&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;outer&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# computing 90% confidence interval with &quot;exact&quot; meaning Clopper-Pearson
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binom&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cis&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;binom.confint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;conf.level&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;exact&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;# max theta for which n all negative outcomes have probability 5%
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p_all_neg&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1-0.05&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data.frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;upper&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p_all_neg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show.legend&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colour&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;#d33682&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;geom_point&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show.legend&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;kc&quot;&gt;TRUE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colour&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;#6c71c4&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;trials&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;expression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;theme&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis.title.x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;face&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;bold&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis.text.x&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis.title.y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;face&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;bold&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;18&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+        &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis.text.y&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;  &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;element_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;angle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vjust&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/figure/source/2016-07-07-confidence-interval-and-hypothesis-test/plot-1.png&quot; alt=&quot;plot of chunk plot&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;finding-confidence-intervals&quot;&gt;Finding confidence intervals&lt;/h2&gt;
+
+&lt;p&gt;There is a one-to-one correspondence between confidence intervals and hypothesis
+tests. As a matter of fact, confidence sets are found by inverting a test
+statistics.&lt;/p&gt;
+
+&lt;p&gt;Let’s start revisiting a few concepts, following the
+&lt;a href=&quot;http://books.google.ch/books/about/Statistical_inference.html?id=0x_vAAAAMAAJ&amp;amp;redir_esc=y&quot;&gt;classics&lt;/a&gt;.
+We have a hypothesis for a parameter of interest $\theta$. The hypothesis says
+that it has a certain value&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H_0 : \theta = \theta_0.&lt;/script&gt;
+
+&lt;p&gt;We have data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt; and a test statistics telling us whether to reject the
+hypothesis or not. The acceptance region &lt;script type=&quot;math/tex&quot;&gt;A(\theta_0)&lt;/script&gt; is the region of the
+sample space for which we do not reject &lt;script type=&quot;math/tex&quot;&gt;H_0&lt;/script&gt; at a level &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;. In symbols&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(X \in A(\theta_0)) \geq 1 - \alpha&lt;/script&gt;
+
+&lt;p&gt;or&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(X \notin A(\theta_0)) \leq \alpha.&lt;/script&gt;
+
+&lt;p&gt;Now, for each realisation of the data &lt;script type=&quot;math/tex&quot;&gt;X&lt;/script&gt;, we take the values of &lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt; for
+which the hypothesis &lt;script type=&quot;math/tex&quot;&gt;H_0&lt;/script&gt; is accepted. Then we have built a confidence set for
+&lt;script type=&quot;math/tex&quot;&gt;\theta&lt;/script&gt;. We define &lt;script type=&quot;math/tex&quot;&gt;C(X)&lt;/script&gt; as the set in parameter&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;C(X)=\{\theta_0 : x \in A(\theta_0)\}.&lt;/script&gt;
+
+&lt;p&gt;Then, &lt;script type=&quot;math/tex&quot;&gt;C(X)&lt;/script&gt; is a &lt;script type=&quot;math/tex&quot;&gt;1 - \alpha&lt;/script&gt; confidence set. This follows quite immediately
+from the definition of acceptance region above&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;p(\theta \in C(X)) = p(X \in A(\theta_0)) \geq 1 − \alpha.&lt;/script&gt;
+
+&lt;h2 id=&quot;clopper-pearson-estimator&quot;&gt;Clopper-Pearson estimator&lt;/h2&gt;
+
+&lt;p&gt;There are several estimators for the confidence interval of the binomial
+proportion. The advantage of this one is that it is exact, rather than based on
+the normal approximation (see the Wikipedia page linked above). The
+disadvantage is that it is conservative, i.e. there might be a smaller interval
+with the same confidence level. The estimated interval is defined as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\{\theta : p(\mathrm{Bin}(n, \theta) \leq T) &gt; \frac{\alpha}{2} \} \cap
+\{\theta : p(\mathrm{Bin}(n, \theta) \geq T) &gt; \frac{\alpha}{2} \}.&lt;/script&gt;
+
+&lt;p&gt;From this definition we reconcile the fact that my estimate at 95% coincides
+with the Clopper-Pearson at 90%. In fact, since we are in the special case of
+&lt;script type=&quot;math/tex&quot;&gt;T=0&lt;/script&gt;, we can write the Clopper-Pearson as&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\{\theta : p(\mathrm{Bin}(n, \theta) \leq 0) &gt; \frac{\alpha}{2} \} \cap
+\{\theta : p(\mathrm{Bin}(n, \theta) \geq 0) &gt; \frac{\alpha}{2} \} =
+\{\theta : p(\mathrm{Bin}(n, \theta) = 0) &gt; \frac{\alpha}{2} \}.&lt;/script&gt;
+
+&lt;p&gt;By taking &lt;script type=&quot;math/tex&quot;&gt;\alpha = 0.10&lt;/script&gt; in the Clopper-Pearson estimate, we have the formula
+I used for my estimate.&lt;/p&gt;
+
+&lt;h2 id=&quot;a-final-observation&quot;&gt;A final observation&lt;/h2&gt;
+
+&lt;p&gt;What is most interesting to my colleague? The hypothesis test says that those
+data would already exclude &lt;script type=&quot;math/tex&quot;&gt;\theta=0.12&lt;/script&gt; or higher at 5%, but the 95% interval
+according to Clopper-Pearson is &lt;script type=&quot;math/tex&quot;&gt;0 \leq \theta \leq 0.15&lt;/script&gt;. As we saw they are
+two different but intimately related things. What is more important to you
+depends largely on your taste.
+We also had the chance to underline something that is often neglected: finding
+an &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; confidence interval doesn’t mean we found the smallest interval
+that contains the true value with probability &lt;script type=&quot;math/tex&quot;&gt;1 - \alpha&lt;/script&gt;. If you want to
+investigate an extreme consequence of this, you can visit
+&lt;a href=&quot;http://www.roma1.infn.it/~dagos/ci_calc.html&quot;&gt;the ultimate confidence intervals calculator&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 07 Jul 2016 00:00:00 +0200</pubDate>
+        <link>https://ozagordi.github.io/2016/07/07/confidence-interval-and-hypothesis-test/</link>
+        <guid isPermaLink="true">https://ozagordi.github.io/2016/07/07/confidence-interval-and-hypothesis-test/</guid>
+        
+        <category>statistical inference</category>
+        
+        <category>nhst</category>
+        
+        <category>confindence interval</category>
+        
+        <category>binomial</category>
+        
+        
+      </item>
     
       <item>
         <title>The most important concept</title>
@@ -35,7 +201,17 @@ impress/humiliate others with some “theorem dropping”.&lt;/p&gt;
 &lt;p&gt;So, if you had to choose one single concept that a person absolutely needs to
 grasp before endeavouring in data analysis, what should this concept be?&lt;/p&gt;
 
-&lt;p&gt;I believe it is the concept of function in mathematics.&lt;/p&gt;
+&lt;p&gt;This is a very different question from the one Feynman answered. I am now asking
+what is the concept that is absolutely needed to understand methods and results
+in data analysis &lt;strong&gt;explained by someone who knows it&lt;/strong&gt;, not the single notion
+that would help the most a new civilization rebuilding science from scratch.&lt;/p&gt;
+
+&lt;p&gt;I cannot imagine a more pervasive and fundamental concept than that of function
+in mathematics. From plotting any kind of results, to writing even the simplest
+program, anything is hard or impossible to understand without this type of
+abstraction.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Header image from &lt;a href=&quot;https://flic.kr/p/ecpHBw&quot;&gt;Flickr&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 06 Jul 2016 00:00:00 +0200</pubDate>
         <link>https://ozagordi.github.io/2016/07/06/most-important-concept/</link>

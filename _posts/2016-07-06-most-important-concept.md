@@ -31,4 +31,15 @@ impress/humiliate others with some "theorem dropping".
 So, if you had to choose one single concept that a person absolutely needs to
 grasp before endeavouring in data analysis, what should this concept be?
 
-I believe it is the concept of function in mathematics. 
+This is a very different question from the one Feynman answered. I am now asking
+what is the concept that is absolutely needed to understand methods and results
+in data analysis **explained by someone who knows it**, not the single notion
+that would help the most a new civilization rebuilding science from scratch.
+
+I cannot imagine a more pervasive and fundamental concept than that of function
+in mathematics. From plotting any kind of results, to writing even the simplest
+program, anything is hard or impossible to understand without this type of
+abstraction.
+
+
+_Header image from [Flickr](https://flic.kr/p/ecpHBw)_

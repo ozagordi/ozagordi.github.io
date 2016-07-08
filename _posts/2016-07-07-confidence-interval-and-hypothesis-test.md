@@ -69,7 +69,7 @@ interval computed with the Clopper-Pearson method (magenta line).
 ```r
 library(ggplot2)
 library(ggthemr)
-ggthemr('solarized')
+ggthemr('solarized', type='outer')
 
 # computing 90% confidence interval with "exact" meaning Clopper-Pearson
 library(binom)
@@ -85,24 +85,14 @@ p <- ggplot(df, aes(x)) +
   xlab("trials") +
   ylab(expression(theta)) +
   ylim(0.0, 0.5) +
-  theme_solarized() +
-  theme(axis.title.x = element_text(face="bold", colour="#268bd2", size=16),
+  theme(axis.title.x = element_text(face="bold", size=18),
         axis.text.x  = element_text(angle=0, vjust=0.0, size=14),
-        axis.title.y = element_text(face="bold", colour="#268bd2", size=16),
+        axis.title.y = element_text(face="bold", size=18),
         axis.text.y  = element_text(angle=0, vjust=0.0, size=14))
-```
-
-```
-## Error in eval(expr, envir, enclos): could not find function "theme_solarized"
-```
-
-```r
 print(p)
 ```
 
-```
-## Error in print(p): object 'p' not found
-```
+![plot of chunk plot](/figure/source/2016-07-07-confidence-interval-and-hypothesis-test/plot-1.png)
 
 ## Finding confidence intervals
 
