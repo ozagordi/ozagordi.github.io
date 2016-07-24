@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Confidence interval and hypothesis test
+title: Confidence interval and hypothesis test
 author: Osvaldo
 tags: [statistical inference, nhst, confindence interval, binomial]
 ---
