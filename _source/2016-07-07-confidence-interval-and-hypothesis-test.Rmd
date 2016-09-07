@@ -173,3 +173,5 @@ an $$\alpha$$ confidence interval doesn’t mean we found the smallest interval
 that contains the true value with probability $$1 - \alpha$$. If you want to
 investigate an extreme consequence of this, you can visit
 [the ultimate confidence intervals calculator](http://www.roma1.infn.it/~dagos/ci_calc.html).
+
+_Header image from [Flickr](https://flic.kr/p/9u9wZk)_

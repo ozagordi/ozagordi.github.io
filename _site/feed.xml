@@ -6,9 +6,82 @@
 </description>
     <link>https://ozagordi.github.io/</link>
     <atom:link href="https://ozagordi.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 24 Jul 2016 16:50:21 +0200</pubDate>
-    <lastBuildDate>Sun, 24 Jul 2016 16:50:21 +0200</lastBuildDate>
+    <pubDate>Wed, 07 Sep 2016 16:35:53 +0200</pubDate>
+    <lastBuildDate>Wed, 07 Sep 2016 16:35:53 +0200</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>There is (almost) always a model</title>
+        <description>&lt;p&gt;One of the nice things of my job is the close contact between the experiments
+and the analysis. While my collaborators develop the method in the lab,
+working with reagents, patients samples and sophisticated machines, I sit in
+front of a computer developing tools like &lt;a href=&quot;http://github.com/ozagordi/VirMet&quot;&gt;this&lt;/a&gt;
+and using it to analyse the results coming from the lab.&lt;/p&gt;
+
+&lt;p&gt;Recently, one interesting question was raised when a student defended her
+PhD thesis. I wasn’t there so I was only asked about this later. The question
+was “did the development of the experimental method and that of
+the analysis pipeline influence each other?” No, said one colleague.
+Of course they did, I later replied.&lt;/p&gt;
+
+&lt;p&gt;Why did we have different opinions, since we both know how everything was
+developed? My reasoning was that, without a computational pipeline to analyse
+the results produced in the lab, my colleagues would have had hardly any hint
+on whether their experiments were working or not. At the same time I could test
+my tools on data of realistic size, with realistic signal-to-noise ratio and so
+on. One side could not have done it without the other. My colleague, maybe because
+of the context in which the question was asked, intended it in a more
+specific way: did you tweak the parameters in the software in order to specifically
+respond to a change in the experimental conditions? And the answer here is no,
+undoubtedly.&lt;/p&gt;
+
+&lt;p&gt;My most successful tool, at least in terms of citations, is a
+&lt;a href=&quot;http://github.com/ozagordi/shorah/&quot;&gt;software&lt;/a&gt; to denoise DNA sequences, chiefly
+in the analysis of viral samples. It is an unsupervised learning algorithm that
+models in an explicit way, though simplified, the process of sequencing a genetically diverse
+sample. We first wrote the &lt;em&gt;generative&lt;/em&gt; model, then the algorithm to do
+inference on its parameters and we implemented it in an efficient way. There is a
+nice correspondence between parameters in the model and physical processes
+taking place in the lab. Thus, it is easily interpretable.&lt;/p&gt;
+
+&lt;p&gt;It was great, but it took quite some time.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/model.png&quot; alt=&quot;Graphical representation of a generative model&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;But do you always need such a model? According to &lt;a href=&quot;http://r4ds.had.co.nz/model-intro.html&quot;&gt;some&lt;/a&gt;,
+&lt;q&gt;the goal of a model is to provide a simple low-dimensional summary of a dataset&lt;/q&gt;,
+and I would stretch this to say that even a simple data visualisation can be considered a model.&lt;/p&gt;
+
+&lt;p&gt;For example, in this more recent project I relied heavily on some heuristic
+tools to denoise my data, match them by similarity and obtain summary statistics.
+Advantages of these heruristic tools: they are fast,
+thoroughly tested by a whole community of researchers, and I could easily use them.
+I did not have to struggle to write efficient code from scratch.
+On the other hand, I do not have many parameters that I could directly link to
+anything that is happening in the lab.&lt;/p&gt;
+
+&lt;p&gt;A slightly related topic of discussion in machine learning is the trade-off
+between interpretability and accuracy of a model. Although accuracy here depends
+on many more things, this observation makes me appreciate even more the power
+of some methods in machine learning. The models underlying tools like clustering,
+trees, regression are so general and powerful that they can be routinely used for
+a plethora of problems in all sorts of domains with great results. It maybe
+worth reminding it next time we apply one of these.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Header image from &lt;a href=&quot;https://flic.kr/p/66jA7n&quot;&gt;Flickr&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 07 Sep 2016 00:00:00 +0200</pubDate>
+        <link>https://ozagordi.github.io/2016/09/07/modelling/</link>
+        <guid isPermaLink="true">https://ozagordi.github.io/2016/09/07/modelling/</guid>
+        
+        <category>fundamentals</category>
+        
+        <category>science</category>
+        
+        <category>mathematics</category>
+        
+        
+      </item>
     
       <item>
         <title>First steps with Docker</title>
@@ -251,6 +324,8 @@ an &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; confidence inte
 that contains the true value with probability &lt;script type=&quot;math/tex&quot;&gt;1 - \alpha&lt;/script&gt;. If you want to
 investigate an extreme consequence of this, you can visit
 &lt;a href=&quot;http://www.roma1.infn.it/~dagos/ci_calc.html&quot;&gt;the ultimate confidence intervals calculator&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Header image from &lt;a href=&quot;https://flic.kr/p/9u9wZk&quot;&gt;Flickr&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 07 Jul 2016 00:00:00 +0200</pubDate>
         <link>https://ozagordi.github.io/2016/07/07/confidence-interval-and-hypothesis-test/</link>

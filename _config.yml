@@ -9,7 +9,7 @@ description: > # this means to ignore newlines until "baseurl:"
   learning, python, R and so on.
 baseurl:
 url: "https://ozagordi.github.io"
-#twitter_username: SBootstrap
+twitter_username: ozagordi 
 github_username: ozagordi
 linkedin_username: osvaldozagordi
 #facebook_username: IronSummitMedia
