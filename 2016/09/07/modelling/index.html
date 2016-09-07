@@ -9,9 +9,9 @@
     <meta name="description" content="Personal blog of Osvaldo Zagordi, data scientist at University of Zurich and founder of enGene Statistics. Data science, statistics, science, machine learning, python, R and so on.
 ">
 
-    <title>First steps with Docker - Sharp Bell</title>
+    <title>There is (almost) always a model - Sharp Bell</title>
 
-    <link rel="canonical" href="https://ozagordi.github.io/2016/07/24/first-steps-with-docker/">
+    <link rel="canonical" href="https://ozagordi.github.io/2016/09/07/modelling/">
 
     <!-- MathJax -->
     <script type="text/x-mathjax-config">
@@ -87,14 +87,14 @@
 
 
     <!-- Post Header -->
-<header class="intro-header" style="background-image: url('/img/vineyard.jpg')">
+<header class="intro-header" style="background-image: url('/img/cradle.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 <div class="post-heading">
-                    <h1>First steps with Docker</h1>
+                    <h1>There is (almost) always a model</h1>
                     
-                    <span class="meta">Posted by Osvaldo on July 24, 2016</span>
+                    <span class="meta">Posted by Osvaldo on September 7, 2016</span>
                 </div>
             </div>
         </div>
@@ -107,79 +107,63 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-				<p>You might have read or heard that science, I mean academic science, has a few
-<a href="http://www.vox.com/2016/7/14/12016710/science-challeges-research-funding-peer-review-process">problems</a>,
-among these a <a href="http://www.vox.com/2016/7/14/12016710/science-challeges-research-funding-peer-review-process#3">reproducibility
-crisis</a>.</p>
+				<p>One of the nice things of my job is the close contact between the experiments
+and the analysis. While my collaborators develop the method in the lab,
+working with reagents, patients samples and sophisticated machines, I sit in
+front of a computer developing tools like <a href="http://github.com/ozagordi/VirMet">this</a>
+and using it to analyse the results coming from the lab.</p>
 
-<p>Although the terms are often used interchangeably, there is an important
-difference between reproducibility and replicability. The former is the ability
-to repeat some analysis thanks to the fact that sufficient detail has been
-shared by those who performed it first. Replicability is the probability
-that an independent experiment will reach the same results and conclusions that
-were first reported.</p>
+<p>Recently, one interesting question was raised when a student defended her
+PhD thesis. I wasn’t there so I was only asked about this later. The question
+was “did the development of the experimental method and that of
+the analysis pipeline influence each other?” No, said one colleague.
+Of course they did, I later replied.</p>
 
-<p>A data scientist is typically responsible for the analysis of data that have
-been produced in the lab (or in the field) by someone else, so he/she is
-primarily responsible to guarantee its reproducibility. This shouldn’t be too
-hard, since all you have to do is 1) saying which data were analyzed and 2) how
-exactly. You share both and you are done; certainly easier than replicate a
-complex and usually expensive experiment. Rmarkdown documents (by the way, this
-blog is written in Rmarkdown) and Python notebook have become popular in recent
-years also because they address this need.</p>
+<p>Why did we have different opinions, since we both know how everything was
+developed? My reasoning was that, without a computational pipeline to analyse
+the results produced in the lab, my colleagues would have had hardly any hint
+on whether their experiments were working or not. At the same time I could test
+my tools on data of realistic size, with realistic signal-to-noise ratio and so
+on. One side could not have done it without the other. My colleague, maybe because
+of the context in which the question was asked, intended it in a more
+specific way: did you tweak the parameters in the software in order to specifically
+respond to a change in the experimental conditions? And the answer here is no,
+undoubtedly.</p>
 
-<p>For more complex projects, where multiple tools are needed, it can be more
-complicated than that, and it is recognized that much of the scientific
-literature is hard to reproduce. Reasons for this are largely to be found in a
-lack of right incentives, but there are several remarkable technical challenges
-posed by the large number of factors that influence the results. Even if we
-only consider the analysis part, the huge variety of available systems makes
-reproducibility challenging.
-<em>You performed the analysis on a Linux cluster, will it run the same on a Mac
-OS X? If you ran Python 3.4, will it still work and give the same results with
-Python 3.5.1? Do I have to update that library, or is the one I have already
-installed recent enough? And I’m still missing that dependency…</em></p>
+<p>My most successful tool, at least in terms of citations, is a
+<a href="http://github.com/ozagordi/shorah/">software</a> to denoise DNA sequences, chiefly
+in the analysis of viral samples. It is an unsupervised learning algorithm that
+models in an explicit way, though simplified, the process of sequencing a genetically diverse
+sample. We first wrote the <em>generative</em> model, then the algorithm to do
+inference on its parameters and we implemented it in an efficient way. There is a
+nice correspondence between parameters in the model and physical processes
+taking place in the lab. Thus, it is easily interpretable.</p>
 
-<h2 id="full-virtualization">Full virtualization</h2>
+<p>It was great, but it took quite some time.</p>
 
-<p>Virtual machines (VM), which I understand were created for entirely different
-reasons, offer a possible way to make replication easier.
-The researcher can setup an environment to run the analysis, then make an image
-of this and share it. Another user who wants to reproduce the analysis can
-launch this image with a VM and it will be like sitting at the same computer:
-everything exactly the same.</p>
+<p><img src="/img/model.png" alt="Graphical representation of a generative model" /></p>
 
-<p>This solution presents a few disadvantages. Images are pretty big objects,
-often in the order of several gigabytes. Moving them around is fairly
-inconvenient, to begin with. Further, a VM takes in the order of minutes to
-launch. Not too much for a one time analysis, still slightly annoying. In
-general, VMs tend to be quite heavy on the hardware.</p>
+<p>But do you always need such a model? According to <a href="http://r4ds.had.co.nz/model-intro.html">some</a>,
+<q>the goal of a model is to provide a simple low-dimensional summary of a dataset</q>,
+and I would stretch this to say that even a simple data visualisation can be considered a model.</p>
 
-<h2 id="enter-containers">Enter containers</h2>
+<p>For example, in this more recent project I relied heavily on some heuristic
+tools to denoise my data, match them by similarity and obtain summary statistics.
+Advantages of these heruristic tools: they are fast,
+thoroughly tested by a whole community of researchers, and I could easily use them.
+I did not have to struggle to write efficient code from scratch.
+On the other hand, I do not have many parameters that I could directly link to
+anything that is happening in the lab.</p>
 
-<p>Containers offer a light-weight option to VMs. They are usually smaller and,
-above all, they are launched in a second or less.</p>
+<p>A slightly related topic of discussion in machine learning is the trade-off
+between interpretability and accuracy of a model. Although accuracy here depends
+on many more things, this observation makes me appreciate even more the power
+of some methods in machine learning. The models underlying tools like clustering,
+trees, regression are so general and powerful that they can be routinely used for
+a plethora of problems in all sorts of domains with great results. It maybe
+worth reminding it next time we apply one of these.</p>
 
-<p>I’ve been recently developing a <a href="http://github.com/ozagordi/VirMet">pipeline</a>
-for the analysis of DNA sequences that relies on many external tools. As it is
-customary in academia, the plan is to “advertise” it with a scientific paper
-and hope that many other users will find it useful, use it and cite it. But
-installing ten other tools is certainly a disincentive.</p>
-
-<p>So, I recently looked into <a href="https://www.docker.com">Docker</a>, which is now
-probably the most famous containerisation software.</p>
-
-<p>A developer usually starts from one of the images found in Docker Hub and adds
-the necessary configuration by writing a <code class="highlighter-rouge">Dockerfile</code>. Each instruction in this
-file is a layer, in docker terms, and the engine builds the image by stacking
-these layers in an optimized way. The resulting image can be made available to
-others via Docker Hub. In this way one can make available to the community an
-environment in which the application is certainly running as expected. The
-advantages of Docker over VMs are not limited to being light and fast. The
-presence of a central directory and the possibility to develop images easily
-and in an open format both make Docker interesting. It must be said that at the
-same time this poses a small risk: making dozens of images for every possible
-little project that one makes and pushing it onto the hub.</p>
+<p><em>Header image from <a href="https://flic.kr/p/66jA7n">Flickr</a></em></p>
 
 
                 <hr>
@@ -187,13 +171,9 @@ little project that one makes and pushing it onto the hub.</p>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2016/07/07/confidence-interval-and-hypothesis-test/" data-toggle="tooltip" data-placement="top" title="Confidence interval and hypothesis test">&larr; Previous Post</a>
+                        <a href="/2016/07/24/first-steps-with-docker/" data-toggle="tooltip" data-placement="top" title="First steps with Docker">&larr; Previous Post</a>
                     </li>
                     
-                    
-                    <li class="next">
-                        <a href="/2016/09/07/modelling/" data-toggle="tooltip" data-placement="top" title="There is (almost) always a model">Next Post &rarr;</a>
-                    </li>
                     
                 </ul>
 
