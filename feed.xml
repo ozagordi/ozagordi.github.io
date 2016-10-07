@@ -6,9 +6,221 @@
 </description>
     <link>https://ozagordi.github.io/</link>
     <atom:link href="https://ozagordi.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Wed, 07 Sep 2016 16:35:53 +0200</pubDate>
-    <lastBuildDate>Wed, 07 Sep 2016 16:35:53 +0200</lastBuildDate>
+    <pubDate>Sat, 08 Oct 2016 00:02:10 +0200</pubDate>
+    <lastBuildDate>Sat, 08 Oct 2016 00:02:10 +0200</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Breaking ground</title>
+        <description>&lt;p&gt;Some weeks ago I read a nice &lt;a href=&quot;http://www.nature.com/news/majority-of-mathematicians-hail-from-just-24-scientific-families-1.20491&quot;&gt;article&lt;/a&gt;
+by Davide Castelvecchi on Nature News. It reports an analysis done on the
+&lt;a href=&quot;http://genealogy.math.ndsu.nodak.edu/&quot;&gt;Mathematics Genealogy Project&lt;/a&gt;, a database
+aiming to list present and past mathematicians together with their advisor, in
+order to build a &lt;em&gt;family tree&lt;/em&gt; of the advisor-advisee relationships. This
+analysis shows that two thirds of all mathematicians present in the database can
+be assigned to one of only 24 families, the biggest of which founded by the
+Italian mathematician (physician and natural philosopher)
+Sigismondo Polcastro, who lived between 14th and 15th century.&lt;/p&gt;
+
+&lt;p&gt;Although some physicists are present in MGP (where do you draw the line between
+physics and mathematics, after all?) I don’t have a genealogy myself, but
+I had already explored the database in the past. After reading this report I
+was more motivated into going really back in time by clicking multiple times on the
+&lt;strong&gt;Advisor&lt;/strong&gt; link and see if I could really end up on
+&lt;a href=&quot;https://genealogy.math.ndsu.nodak.edu/id.php?id=38586&quot;&gt;Euler&lt;/a&gt; (over 96 thousand
+descendants). While doing so I stumbled upon many many names that you learn
+studying calculus, and all very closely connected to each other, something I
+had not previously realized.&lt;/p&gt;
+
+&lt;p&gt;So I decided to save some of these advisor-advisee relationship and plot them
+as a directed graph with &lt;a href=&quot;https://d3js.org&quot;&gt;d3&lt;/a&gt;. The result is below,
+an arrow from A to B means &lt;em&gt;A was advisor of B&lt;/em&gt;.
+You can (and probably have to) drag the points around to clarify some links.&lt;/p&gt;
+
+&lt;div id=&quot;d3graph&quot;&gt;&lt;/div&gt;
+
+&lt;style&gt;
+
+.box {
+  font: 10px sans-serif;
+}
+
+.node {
+    fill: #657b83;
+    opacity: 0.4;
+}
+.node text {
+    fill: #000;
+    pointer-events: none;
+    font: 13px sans-serif;
+}
+.link {
+    stroke: #657b83;
+    stroke-opacity: .7;
+}
+&lt;/style&gt;
+
+&lt;script&gt;
+var links = [
+    {source: &quot;Marin Mersenne&quot;, target: &quot;Blaise Pascal&quot;},
+    {source: &quot;Marin Mersenne&quot;, target: &quot;Frans van Schooten, Jr.&quot;},
+    {source: &quot;Frans van Schooten, Jr.&quot;, target: &quot;Christiaan Huygens&quot;},
+//    {source: &quot;Frans van Schooten, Jr.&quot;, target: &quot;Johan de Witt&quot;},
+    {source: &quot;Christiaan Huygens&quot;, target: &quot;Gottfried W. Leibniz&quot;},
+    {source: &quot;Gottfried W. Leibniz&quot;, target: &quot;Nicolas Malebranche&quot;},
+    {source: &quot;Nicolas Malebranche&quot;, target: &quot;Jakob Bernoulli&quot;},
+    {source: &quot;Jakob Bernoulli&quot;, target: &quot;Nikolaus (I) Bernoulli&quot;},
+    {source: &quot;Jakob Bernoulli&quot;, target: &quot;Johann Bernoulli&quot;},
+    {source: &quot;Johann Bernoulli&quot;, target: &quot;Daniel Bernoulli&quot;},
+    {source: &quot;Johann Bernoulli&quot;, target: &quot;Leonhard Euler&quot;},
+    {source: &quot;Leonhard Euler&quot;, target: &quot;Joseph-Louis Lagrange&quot;},
+    {source: &quot;Giovanni B. Beccaria&quot;, target: &quot;Joseph-Louis Lagrange&quot;},
+    {source: &quot;Joseph-Louis Lagrange&quot;, target: &quot;Jean-Baptiste Fourier&quot;},
+    {source: &quot;Joseph-Louis Lagrange&quot;, target: &quot;Simeon D. Poisson&quot;},
+    {source: &quot;Pierre-Simon Laplace&quot;, target: &quot;Simeon D. Poisson&quot;},
+    {source: &quot;Jean-Baptiste Fourier&quot;, target: &quot;Gustav Dirichlet&quot;},
+    {source: &quot;Simeon D. Poisson&quot;, target: &quot;Gustav Dirichlet&quot;},
+    {source: &quot;Simeon D. Poisson&quot;, target: &quot;Joseph Liouville&quot;},
+    {source: &quot;Jean-Baptiste Fourier&quot;, target: &quot;Giovanni A. A. Plana&quot;},
+    {source: &quot;Joseph-Louis Lagrange&quot;, target: &quot;Giovanni A. A. Plana&quot;},
+    {source: &quot;Gustav Dirichlet&quot;, target: &quot;August Kramer&quot;},
+    {source: &quot;Gustav Dirichlet&quot;, target: &quot;Leopold Kronecker&quot;},
+    {source: &quot;Gustav Dirichlet&quot;, target: &quot;Rudolf Lipschitz&quot;},
+    {source: &quot;Rudolf Lipschitz&quot;, target: &quot;C. Felix Klein&quot;}
+];
+
+var nodes = {};
+
+// Compute the distinct nodes from the links.
+links.forEach(function(link) {
+  link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+  link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+});
+
+var width = 740,
+    height = 800;
+
+var force = d3.layout.force()
+    .nodes(d3.values(nodes))
+    .links(links)
+    .size([width, height])
+    .linkDistance(55)
+    .charge(-900)
+    .start();
+
+//var svg = d3.select(&quot;body&quot;)
+var svg = d3.select(&quot;#d3graph&quot;)
+		.append(&quot;svg&quot;)
+    .attr(&quot;class&quot;, &quot;box&quot;)
+    .attr(&quot;width&quot;, width)
+    .attr(&quot;height&quot;, height);
+
+//Create all the line svgs but without locations yet
+var link = svg.selectAll(&quot;.link&quot;)
+    .data(force.links())
+    .enter().append(&quot;line&quot;)
+    .attr(&quot;class&quot;, &quot;link&quot;)
+    .style(&quot;marker-end&quot;,  &quot;url(#advisor)&quot;); //Added
+
+
+var node = svg.selectAll(&quot;.node&quot;)
+    .data(force.nodes())
+    .enter().append(&quot;g&quot;)
+    .attr(&quot;class&quot;, &quot;node&quot;)
+    .call(force.drag);
+
+node.append(&quot;circle&quot;)
+    .attr(&quot;r&quot;, 4)
+
+node.append(&quot;text&quot;)
+      .attr(&quot;dx&quot;, 8)
+      .attr(&quot;dy&quot;, &quot;.85em&quot;)
+      .text(function(d) { return d.name });
+
+force.on(&quot;tick&quot;, function () {
+
+    link.attr(&quot;x1&quot;, function (d) {
+        return d.source.x;
+    })
+        .attr(&quot;y1&quot;, function (d) {
+        return d.source.y;
+    })
+        .attr(&quot;x2&quot;, function (d) {
+        return d.target.x;
+    })
+        .attr(&quot;y2&quot;, function (d) {
+        return d.target.y;
+    });
+
+    d3.selectAll(&quot;circle&quot;).attr(&quot;cx&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;cy&quot;, function (d) {
+        return d.y;
+    });
+
+    d3.selectAll(&quot;text&quot;).attr(&quot;x&quot;, function (d) {
+        return d.x;
+    })
+        .attr(&quot;y&quot;, function (d) {
+        return d.y;
+    });
+
+});
+
+// this defines the marker-end programmatically
+svg.append(&quot;defs&quot;).selectAll(&quot;marker&quot;)
+    .data([&quot;advisor&quot;])
+  .enter().append(&quot;marker&quot;)
+    .attr(&quot;id&quot;, function(d) { return d; })
+    .attr(&quot;viewBox&quot;, &quot;0 -1 2 2&quot;)
+    .attr(&quot;refX&quot;, 2)
+    .attr(&quot;refY&quot;, 0)
+    .attr(&quot;markerWidth&quot;, 6)
+    .attr(&quot;markerHeight&quot;, 6)
+    .attr(&quot;orient&quot;, &quot;auto&quot;)
+  .append(&quot;path&quot;)
+    .attr(&quot;d&quot;, &quot;M0,-1 L2,0 L0,1 z&quot;)
+    //.style(&quot;stroke&quot;, &quot;#f00&quot;)
+    .style(&quot;fill&quot;, &quot;#268bd2&quot;)
+    .style(&quot;opacity&quot;, &quot;1.0&quot;);
+&lt;/script&gt;
+
+&lt;p&gt;The selection of nodes is completely arbitrary, I only saved nodes that
+somehow struck me because something important in mathematics is named after
+them.&lt;/p&gt;
+
+&lt;p&gt;There should be other interesting cliques in the database. For example, where
+are Gauss, Riemann, Dedekind? And waht about Cauchy and Hilbert?&lt;/p&gt;
+
+&lt;h4 id=&quot;technical-notes&quot;&gt;Technical notes&lt;/h4&gt;
+
+&lt;p&gt;I found the following links useful to draw the network:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An A to Z of extra features for the D3 force layout, a
+&lt;a href=&quot;http://www.coppelia.io/2014/07/an-a-to-z-of-extra-features-for-the-d3-force-layout/&quot;&gt;tutorial&lt;/a&gt;
+by Simon Raper,&lt;/li&gt;
+  &lt;li&gt;a &lt;a href=&quot;http://stackoverflow.com/questions/22651346/how-to-embed-a-d3-js-example-to-the-jekyll-blog-post&quot;&gt;question&lt;/a&gt;
+on Stack Overflow, &lt;em&gt;How to embed d3 in a jekyll blog post&lt;/em&gt; and references therein.&lt;/li&gt;
+  &lt;li&gt;Last but not least, &lt;a href=&quot;http://stackoverflow.com/questions/13865606/append-svg-canvas-to-element-other-than-body-using-d3&quot;&gt;this&lt;/a&gt; helped me correct a fundamental mistake I was making in
+selecting the relevant html element.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;em&gt;Header image from &lt;a href=&quot;https://flic.kr/p/xZjJW&quot;&gt;Flickr&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 08 Oct 2016 00:00:00 +0200</pubDate>
+        <link>https://ozagordi.github.io/2016/10/08/breaking-ground/</link>
+        <guid isPermaLink="true">https://ozagordi.github.io/2016/10/08/breaking-ground/</guid>
+        
+        <category>mathematics</category>
+        
+        <category>dataviz</category>
+        
+        <category>d3</category>
+        
+        
+      </item>
     
       <item>
         <title>There is (almost) always a model</title>
