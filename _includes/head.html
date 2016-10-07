@@ -9,6 +9,11 @@
 
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 
+    <!-- Custom JavaScript files set in YAML front matter -->
+    {% for js in page.customjs %}
+    <script type="text/javascript" src="{{ js }}"></script>
+    {% endfor %}
+
     <!-- MathJax -->
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({

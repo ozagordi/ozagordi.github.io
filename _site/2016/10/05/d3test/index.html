@@ -9,11 +9,13 @@
     <meta name="description" content="Personal blog of Osvaldo Zagordi, data scientist at University of Zurich and founder of enGene Statistics. Data science, statistics, science, machine learning, python, R and so on.
 ">
 
-    <title>Sharp Bell</title>
+    <title>Test - Sharp Bell</title>
 
-    <link rel="canonical" href="https://ozagordi.github.io/">
+    <link rel="canonical" href="https://ozagordi.github.io/2016/10/05/d3test/">
 
     <!-- Custom JavaScript files set in YAML front matter -->
+    
+    <script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
     
 
     <!-- MathJax -->
@@ -89,83 +91,169 @@
 </nav>
 
 
-    <!-- Page Header -->
-<header class="intro-header" style="background-image: url('/img/header_gsl2.jpg')">
+    <!-- Post Header -->
+<header class="intro-header" style="background-image: url('/img/cradle.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Sharp Bell</h1>
-                    <hr class="small">
-                    <span class="subheading">Skiving on data</span>
+                <div class="post-heading">
+                    <h1>Test</h1>
+                    
+                    <span class="meta">Posted by Osvaldo on October 5, 2016</span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-	<div class="row">
-		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-			
-<div class="post-preview">
-    <a href="/2016/10/08/breaking-ground/">
-        <h2 class="post-title"> Breaking ground
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by Osvaldo on October 8, 2016</p>
-</div>
-<hr>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-<div class="post-preview">
-    <a href="/2016/09/07/modelling/">
-        <h2 class="post-title"> There is (almost) always a model
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by Osvaldo on September 7, 2016</p>
-</div>
-<hr>
+				<p>And here, I’ve used d3 to target an element <code class="highlighter-rouge">&lt;div id="example"&gt;</code> in this document:</p>
 
-<div class="post-preview">
-    <a href="/2016/07/24/first-steps-with-docker/">
-        <h2 class="post-title"> First steps with Docker
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by Osvaldo on July 24, 2016</p>
-</div>
-<hr>
+<style>
 
-<div class="post-preview">
-    <a href="/2016/07/07/confidence-interval-and-hypothesis-test/">
-        <h2 class="post-title"> Confidence interval and hypothesis test
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by Osvaldo on July 7, 2016</p>
-</div>
-<hr>
+div.example {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
-<div class="post-preview">
-    <a href="/2016/07/06/most-important-concept/">
-        <h2 class="post-title"> The most important concept
-        </h2>
-        
-    </a>
-    <p class="post-meta">Posted by Osvaldo on July 6, 2016</p>
-</div>
-<hr>
+.box {
+  font: 10px sans-serif;
+}
+
+.box line,
+.box rect,
+.box circle {
+  fill: #fff;
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.box .center {
+  stroke-dasharray: 3,3;
+}
+
+.box .outlier {
+  fill: none;
+  stroke: #ccc;
+}
+
+</style>
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+<script src="http://bl.ocks.org/mbostock/raw/4061502/0a200ddf998aa75dfdb1ff32e16b680a15e5cb01/box.js"></script>
+
+<script>
+
+var margin = {top: 10, right: 50, bottom: 20, left: 50},
+    width = 120 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var min = Infinity,
+    max = -Infinity;
+
+var chart = d3.box()
+    .whiskers(iqr(1.5))
+    .width(width)
+    .height(height);
+
+d3.csv("/morley.csv", function(error, csv) {
+  var data = [];
+
+  csv.forEach(function(x) {
+    var e = Math.floor(x.Expt - 1),
+        r = Math.floor(x.Run - 1),
+        s = Math.floor(x.Speed),
+        d = data[e];
+    if (!d) d = data[e] = [s];
+    else d.push(s);
+    if (s > max) max = s;
+    if (s < min) min = s;
+  });
+
+  chart.domain([min, max]);
+
+  var svg = d3.select("div#example").selectAll("svg")
+      .data(data)
+    .enter().append("svg")
+      .attr("class", "box")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.bottom + margin.top)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+      .call(chart);
+
+  setInterval(function() {
+    svg.datum(randomize).call(chart.duration(1000));
+  }, 2000);
+});
+
+function randomize(d) {
+  if (!d.randomizer) d.randomizer = randomizer(d);
+  return d.map(d.randomizer);
+}
+
+function randomizer(d) {
+  var k = d3.max(d) * .02;
+  return function(d) {
+    return Math.max(min, Math.min(max, d + k * (Math.random() - .5)));
+  };
+}
+
+// Returns a function to compute the interquartile range.
+function iqr(k) {
+  return function(d, i) {
+    var q1 = d.quartiles[0],
+        q3 = d.quartiles[2],
+        iqr = (q3 - q1) * k,
+        i = -1,
+        j = d.length;
+    while (d[++i] < q1 - iqr);
+    while (d[--j] > q3 + iqr);
+    return [i, j];
+  };
+}
+
+</script>
+
+<div id="example"></div>
+
+<p>To do this, I made the following changes:</p>
+
+<ul>
+  <li>change <code class="highlighter-rouge">var svg = d3.select("body").selectAll("svg")</code> to <code class="highlighter-rouge">var svg = d3.select("div#example").selectAll("svg")</code></li>
+  <li>save <code class="highlighter-rouge">morley.csv</code> to the root directory of my Jekyll site, then change <code class="highlighter-rouge">d3.csv("morley.csv", function(error, csv)</code> to <code class="highlighter-rouge">d3.csv("/morley.csv", function(error, csv)</code> (copied this file into project to resolve cross-site scripting errors)</li>
+  <li>change <code class="highlighter-rouge">&lt;script src="box.js"&gt;&lt;/script&gt;</code> to <code class="highlighter-rouge">&lt;script src="http://bl.ocks.org/mbostock/raw/4061502/0a200ddf998aa75dfdb1ff32e16b680a15e5cb01/box.js"&gt;&lt;/script&gt;</code></li>
+  <li>create a new element called <code class="highlighter-rouge">&lt;div id="example"&gt;&lt;/div&gt;</code></li>
+</ul>
+
+<p>Check out <a href="https://raw.githubusercontent.com/nicksuch/nicksuch.github.io/master/_posts/2014-03-26-d3-sample.md">the code for this post on GitHub</a> to see how I did it!</p>
 
 
-<!-- Pager -->
 
+                <hr>
 
-		</div>
-	</div>
-</div>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/10/05/breaking-ground/" data-toggle="tooltip" data-placement="top" title="Breaking ground">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/10/08/breaking-ground/" data-toggle="tooltip" data-placement="top" title="Breaking ground">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</article>
 
 <hr>
 
