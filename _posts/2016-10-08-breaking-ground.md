@@ -9,29 +9,38 @@ customjs:
 ---
 
 
-Some weeks ago I read a nice [article](http://www.nature.com/news/majority-of-mathematicians-hail-from-just-24-scientific-families-1.20491)
+Most of our daily experiences, be it writing a blog post on a laptop or slicing
+bread with a knife, build on the enormous amount of knowledge and progress
+mankind has accumulated over the millennia. Most of the times, and quite
+understandably, we take all this for granted and live thinking about the future
+rather than the past. It is not worth recalling the iron age every time we use
+a fork, or all the people involved in the invention of the transistor every
+time we use a computer. Every now and then, though, it is hard not to be
+overwhelmed by the magnitude of past scientists.
+
+It occurred to me some weeks ago with mathematicians, when I read a nice
+[article](http://www.nature.com/news/majority-of-mathematicians-hail-from-just-24-scientific-families-1.20491)
 by Davide Castelvecchi on Nature News. It reports an analysis done on the
 [Mathematics Genealogy Project](http://genealogy.math.ndsu.nodak.edu/), a database
 aiming to list present and past mathematicians together with their advisor, in
 order to build a _family tree_ of the advisor-advisee relationships. This
-analysis shows that two thirds of all mathematicians present in the database can
-be assigned to one of only 24 families, the biggest of which founded by the
-Italian mathematician (physician and natural philosopher)
+analysis shows that two thirds of the over 200 thousand mathematicians present
+in the database can be assigned to one of only 24 families, the biggest of which
+founded by the Italian mathematician (physician and natural philosopher)
 Sigismondo Polcastro, who lived between 14th and 15th century.
 
-Although some physicists are present in MGP (where do you draw the line between
-physics and mathematics, after all?) I don't have a genealogy myself, but
-I had already explored the database in the past. After reading this report I
-was more motivated into going really back in time by clicking multiple times on the
-**Advisor** link and see if I could really end up on
-[Euler](https://genealogy.math.ndsu.nodak.edu/id.php?id=38586) (over 96 thousand
-descendants). While doing so I stumbled upon many many names that you learn
-studying calculus, and all very closely connected to each other, something I
-had not previously realized.
+Although I had already explored this database previously, after reading this
+article I decided to go further into the past, something easily done by clicking
+on the **advisor** link. While doing so I encountered many many _big names_,
+those that you meet multiple times when you study calculus. And I was somehow
+startled that they were in direct advisor-advisee relation! It is really not too
+difficult to end up on [Euler](https://genealogy.math.ndsu.nodak.edu/id.php?id=38586)
+(over 96 thousand descendants) meeting Dirichlet, Fourier and Lagrange on the path,
+to name a few.
 
 So I decided to save some of these advisor-advisee relationship and plot them
-as a directed graph with [d3](https://d3js.org). The result is below,
-an arrow from A to B means _A was advisor of B_.
+as a directed graph with [d3](https://d3js.org). In the graph below an arrow
+from A to B means _A was advisor of B_.
 You can (and probably have to) drag the points around to clarify some links.
 
 <div id="d3graph"></div>
@@ -76,13 +85,14 @@ var links = [
     {source: "Giovanni B. Beccaria", target: "Joseph-Louis Lagrange"},
     {source: "Joseph-Louis Lagrange", target: "Jean-Baptiste Fourier"},
     {source: "Joseph-Louis Lagrange", target: "Simeon D. Poisson"},
+    {source: "Jean Le Rond d'Alembert", target: "Pierre-Simon Laplace"},
     {source: "Pierre-Simon Laplace", target: "Simeon D. Poisson"},
     {source: "Jean-Baptiste Fourier", target: "Gustav Dirichlet"},
     {source: "Simeon D. Poisson", target: "Gustav Dirichlet"},
     {source: "Simeon D. Poisson", target: "Joseph Liouville"},
     {source: "Jean-Baptiste Fourier", target: "Giovanni A. A. Plana"},
     {source: "Joseph-Louis Lagrange", target: "Giovanni A. A. Plana"},
-    {source: "Gustav Dirichlet", target: "August Kramer"},
+//    {source: "Gustav Dirichlet", target: "August Kramer"},
     {source: "Gustav Dirichlet", target: "Leopold Kronecker"},
     {source: "Gustav Dirichlet", target: "Rudolf Lipschitz"},
     {source: "Rudolf Lipschitz", target: "C. Felix Klein"}
@@ -190,7 +200,7 @@ somehow struck me because something important in mathematics is named after
 them.
 
 There should be other interesting cliques in the database. For example, where
-are Gauss, Riemann, Dedekind? And waht about Cauchy and Hilbert?
+are Gauss, Riemann, Dedekind? And what about Cauchy and Hilbert?
 
 #### Technical notes
 
@@ -201,7 +211,7 @@ I found the following links useful to draw the network:
   by Simon Raper,
 - a [question](http://stackoverflow.com/questions/22651346/how-to-embed-a-d3-js-example-to-the-jekyll-blog-post)
   on Stack Overflow, _How to embed d3 in a jekyll blog post_ and references therein.
-- Last but not least, [this](http://stackoverflow.com/questions/13865606/append-svg-canvas-to-element-other-than-body-using-d3) helped me correct a fundamental mistake I was making in
-  selecting the relevant html element.
+- Last but not least, [this](http://stackoverflow.com/questions/13865606/append-svg-canvas-to-element-other-than-body-using-d3)
+  helped me correct a fundamental mistake I was making in selecting the relevant html element.
 
 _Header image from [Flickr](https://flic.kr/p/xZjJW)_
