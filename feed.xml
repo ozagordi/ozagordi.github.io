@@ -6,35 +6,44 @@
 </description>
     <link>https://ozagordi.github.io/</link>
     <atom:link href="https://ozagordi.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 08 Oct 2016 11:10:19 +0200</pubDate>
-    <lastBuildDate>Sat, 08 Oct 2016 11:10:19 +0200</lastBuildDate>
+    <pubDate>Sun, 09 Oct 2016 00:17:38 +0200</pubDate>
+    <lastBuildDate>Sun, 09 Oct 2016 00:17:38 +0200</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
         <title>Breaking ground</title>
-        <description>&lt;p&gt;Some weeks ago I read a nice &lt;a href=&quot;http://www.nature.com/news/majority-of-mathematicians-hail-from-just-24-scientific-families-1.20491&quot;&gt;article&lt;/a&gt;
+        <description>&lt;p&gt;Most of our daily experiences, be it writing a blog post on a laptop or slicing
+bread with a knife, build on the enormous amount of knowledge and progress
+mankind has accumulated over the millennia. Most of the times, and quite
+understandably, we take all this for granted and live thinking about the future
+rather than the past. It is not worth recalling the iron age every time we use
+a fork, or all the people involved in the invention of the transistor every
+time we use a computer. Every now and then, though, it is hard not to be
+overwhelmed by the magnitude of past scientists.&lt;/p&gt;
+
+&lt;p&gt;It occurred to me some weeks ago with mathematicians, when I read a nice
+&lt;a href=&quot;http://www.nature.com/news/majority-of-mathematicians-hail-from-just-24-scientific-families-1.20491&quot;&gt;article&lt;/a&gt;
 by Davide Castelvecchi on Nature News. It reports an analysis done on the
 &lt;a href=&quot;http://genealogy.math.ndsu.nodak.edu/&quot;&gt;Mathematics Genealogy Project&lt;/a&gt;, a database
 aiming to list present and past mathematicians together with their advisor, in
 order to build a &lt;em&gt;family tree&lt;/em&gt; of the advisor-advisee relationships. This
-analysis shows that two thirds of all mathematicians present in the database can
-be assigned to one of only 24 families, the biggest of which founded by the
-Italian mathematician (physician and natural philosopher)
+analysis shows that two thirds of the over 200 thousand mathematicians present
+in the database can be assigned to one of only 24 families, the biggest of which
+founded by the Italian mathematician (physician and natural philosopher)
 Sigismondo Polcastro, who lived between 14th and 15th century.&lt;/p&gt;
 
-&lt;p&gt;Although some physicists are present in MGP (where do you draw the line between
-physics and mathematics, after all?) I don’t have a genealogy myself, but
-I had already explored the database in the past. After reading this report I
-was more motivated into going really back in time by clicking multiple times on the
-&lt;strong&gt;Advisor&lt;/strong&gt; link and see if I could really end up on
-&lt;a href=&quot;https://genealogy.math.ndsu.nodak.edu/id.php?id=38586&quot;&gt;Euler&lt;/a&gt; (over 96 thousand
-descendants). While doing so I stumbled upon many many names that you learn
-studying calculus, and all very closely connected to each other, something I
-had not previously realized.&lt;/p&gt;
+&lt;p&gt;Although I had already explored this database previously, after reading this
+article I decided to go further into the past, something easily done by clicking
+on the &lt;strong&gt;advisor&lt;/strong&gt; link. While doing so I encountered many many &lt;em&gt;big names&lt;/em&gt;,
+those that you meet multiple times when you study calculus. And I was somehow
+startled that they were in direct advisor-advisee relation! It is really not too
+difficult to end up on &lt;a href=&quot;https://genealogy.math.ndsu.nodak.edu/id.php?id=38586&quot;&gt;Euler&lt;/a&gt;
+(over 96 thousand descendants) meeting Dirichlet, Fourier and Lagrange on the path,
+to name a few.&lt;/p&gt;
 
 &lt;p&gt;So I decided to save some of these advisor-advisee relationship and plot them
-as a directed graph with &lt;a href=&quot;https://d3js.org&quot;&gt;d3&lt;/a&gt;. The result is below,
-an arrow from A to B means &lt;em&gt;A was advisor of B&lt;/em&gt;.
+as a directed graph with &lt;a href=&quot;https://d3js.org&quot;&gt;d3&lt;/a&gt;. In the graph below an arrow
+from A to B means &lt;em&gt;A was advisor of B&lt;/em&gt;.
 You can (and probably have to) drag the points around to clarify some links.&lt;/p&gt;
 
 &lt;div id=&quot;d3graph&quot;&gt;&lt;/div&gt;
@@ -79,13 +88,14 @@ var links = [
     {source: &quot;Giovanni B. Beccaria&quot;, target: &quot;Joseph-Louis Lagrange&quot;},
     {source: &quot;Joseph-Louis Lagrange&quot;, target: &quot;Jean-Baptiste Fourier&quot;},
     {source: &quot;Joseph-Louis Lagrange&quot;, target: &quot;Simeon D. Poisson&quot;},
+    {source: &quot;Jean Le Rond d&#39;Alembert&quot;, target: &quot;Pierre-Simon Laplace&quot;},
     {source: &quot;Pierre-Simon Laplace&quot;, target: &quot;Simeon D. Poisson&quot;},
     {source: &quot;Jean-Baptiste Fourier&quot;, target: &quot;Gustav Dirichlet&quot;},
     {source: &quot;Simeon D. Poisson&quot;, target: &quot;Gustav Dirichlet&quot;},
     {source: &quot;Simeon D. Poisson&quot;, target: &quot;Joseph Liouville&quot;},
     {source: &quot;Jean-Baptiste Fourier&quot;, target: &quot;Giovanni A. A. Plana&quot;},
     {source: &quot;Joseph-Louis Lagrange&quot;, target: &quot;Giovanni A. A. Plana&quot;},
-    {source: &quot;Gustav Dirichlet&quot;, target: &quot;August Kramer&quot;},
+//    {source: &quot;Gustav Dirichlet&quot;, target: &quot;August Kramer&quot;},
     {source: &quot;Gustav Dirichlet&quot;, target: &quot;Leopold Kronecker&quot;},
     {source: &quot;Gustav Dirichlet&quot;, target: &quot;Rudolf Lipschitz&quot;},
     {source: &quot;Rudolf Lipschitz&quot;, target: &quot;C. Felix Klein&quot;}
@@ -193,7 +203,7 @@ somehow struck me because something important in mathematics is named after
 them.&lt;/p&gt;
 
 &lt;p&gt;There should be other interesting cliques in the database. For example, where
-are Gauss, Riemann, Dedekind? And waht about Cauchy and Hilbert?&lt;/p&gt;
+are Gauss, Riemann, Dedekind? And what about Cauchy and Hilbert?&lt;/p&gt;
 
 &lt;h4 id=&quot;technical-notes&quot;&gt;Technical notes&lt;/h4&gt;
 
@@ -205,8 +215,8 @@ are Gauss, Riemann, Dedekind? And waht about Cauchy and Hilbert?&lt;/p&gt;
 by Simon Raper,&lt;/li&gt;
   &lt;li&gt;a &lt;a href=&quot;http://stackoverflow.com/questions/22651346/how-to-embed-a-d3-js-example-to-the-jekyll-blog-post&quot;&gt;question&lt;/a&gt;
 on Stack Overflow, &lt;em&gt;How to embed d3 in a jekyll blog post&lt;/em&gt; and references therein.&lt;/li&gt;
-  &lt;li&gt;Last but not least, &lt;a href=&quot;http://stackoverflow.com/questions/13865606/append-svg-canvas-to-element-other-than-body-using-d3&quot;&gt;this&lt;/a&gt; helped me correct a fundamental mistake I was making in
-selecting the relevant html element.&lt;/li&gt;
+  &lt;li&gt;Last but not least, &lt;a href=&quot;http://stackoverflow.com/questions/13865606/append-svg-canvas-to-element-other-than-body-using-d3&quot;&gt;this&lt;/a&gt;
+helped me correct a fundamental mistake I was making in selecting the relevant html element.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;&lt;em&gt;Header image from &lt;a href=&quot;https://flic.kr/p/xZjJW&quot;&gt;Flickr&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
