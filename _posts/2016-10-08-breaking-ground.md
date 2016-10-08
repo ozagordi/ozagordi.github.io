@@ -5,7 +5,7 @@ author: Osvaldo
 header-img: "img/crack.jpg"
 tags: [mathematics, dataviz, d3]
 customjs:
-  - http://d3js.org/d3.v3.js
+  - https://d3js.org/d3.v3.js
 ---
 
 
@@ -57,7 +57,7 @@ You can (and probably have to) drag the points around to clarify some links.
 }
 </style>
 
-<script type="text/javascript" src="http://d3js.org/d3.v3.js"></script>
+<script type="text/javascript" src="https://d3js.org/d3.v3.js"></script>
 
 <script>
 var links = [
