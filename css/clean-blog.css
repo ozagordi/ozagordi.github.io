@@ -11,6 +11,7 @@ body {
   /*color: #404040;*/
 
 }
+
 p {
   line-height: 1.5;
   font-family: 'Abel', sans-serif;
@@ -70,6 +71,7 @@ hr.small {
   border-color: #268bd2;
   color: #268bd2;
 }
+
 .navbar-custom {
   background: #eee8d5;
   position: absolute;
