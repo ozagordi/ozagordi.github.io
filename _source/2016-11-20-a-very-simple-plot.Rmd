@@ -58,8 +58,11 @@ from the plain, it's a different feeling.
 [Nine people died](https://www.alptransit.ch/en/media/press-releases/detail/article/memorial-ceremony-for-deceased-tunnel-workers/)
 during construction of the Gotthard Base Tunnel. None of them was of Swiss nationality.
 
-This is the code used to produce the schedule plot, the timetable for a few train
-was obtained on the SBB [website](http://www.sbb.ch) and manually compiled.
+Below is the R code used to produce the schedule plot. The timetable for a few train
+was obtained on the SBB [website](http://www.sbb.ch) and manually written into
+a [csv file](https://github.com/ozagordi/ozagordi.github.io/blob/gh-pages/_source/train_gotthard/timetable-table.csv).
+The coordinates of the cities were taken on Google Maps and saved
+[here](https://github.com/ozagordi/ozagordi.github.io/blob/gh-pages/_source/train_gotthard/coordinates-table.csv).
 
 ```{r marey_plot, message=FALSE, warning=FALSE}
 library(tidyverse)

@@ -6,8 +6,8 @@
 </description>
     <link>https://ozagordi.github.io/</link>
     <atom:link href="https://ozagordi.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 21 Nov 2016 15:49:11 +0100</pubDate>
-    <lastBuildDate>Mon, 21 Nov 2016 15:49:11 +0100</lastBuildDate>
+    <pubDate>Mon, 21 Nov 2016 15:55:40 +0100</pubDate>
+    <lastBuildDate>Mon, 21 Nov 2016 15:55:40 +0100</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
     
       <item>
@@ -59,8 +59,11 @@ from the plain, it’s a different feeling.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.alptransit.ch/en/media/press-releases/detail/article/memorial-ceremony-for-deceased-tunnel-workers/&quot;&gt;Nine people died&lt;/a&gt;
 during construction of the Gotthard Base Tunnel. None of them was of Swiss nationality.&lt;/p&gt;
 
-&lt;p&gt;This is the code used to produce the schedule plot, the timetable for a few train
-was obtained on the SBB &lt;a href=&quot;http://www.sbb.ch&quot;&gt;website&lt;/a&gt; and manually compiled.&lt;/p&gt;
+&lt;p&gt;Below is the R code used to produce the schedule plot. The timetable for a few train
+was obtained on the SBB &lt;a href=&quot;http://www.sbb.ch&quot;&gt;website&lt;/a&gt; and manually written into
+a &lt;a href=&quot;https://github.com/ozagordi/ozagordi.github.io/blob/gh-pages/_source/train_gotthard/timetable-table.csv&quot;&gt;csv file&lt;/a&gt;.
+The coordinates of the cities were taken on Google Maps and saved
+&lt;a href=&quot;https://github.com/ozagordi/ozagordi.github.io/blob/gh-pages/_source/train_gotthard/coordinates-table.csv&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-r highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tidyverse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;library&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ggthemr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
