@@ -53,6 +53,14 @@ base tunnel, they are shown in the plot below. It might not look that impressive
 compared to the TGV. But if you look at the mountains while approaching them
 from the plain, it's a different feeling.
 
+![Trains schedule Zurich-Milano]({{ site.baseurl }}/img/gotthard_trains.svg){: .center-block}
+
+[Nine people died](https://www.alptransit.ch/en/media/press-releases/detail/article/memorial-ceremony-for-deceased-tunnel-workers/)
+during construction of the Gotthard Base Tunnel. None of them was of Swiss nationality.
+
+This is the code used to produce the schedule plot, the timetable for a few train
+was obtained on the SBB [website](http://www.sbb.ch) and manually compiled.
+
 ```{r marey_plot, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(ggthemr)
@@ -87,12 +95,15 @@ p <- ggplot(trains, aes(x=time, y=d, group=train_track, colour=track)) +
   scale_y_continuous(breaks=distances$d, labels=distances$city) +
   scale_x_datetime(date_breaks = "1 hour", date_labels = "%H:%M") +
   xlab('') + ylab('') +
+  theme(axis.title.x = element_text(size=15),
+        axis.text.x  = element_text(size=15),
+        axis.title.y = element_text(size=15),
+        axis.text.y  = element_text(size=15),
+        legend.title = element_text(size=15),
+        legend.text  = element_text(size=15)) +
   scale_colour_manual(values=cbPalette)
 ```
 
-![Trains schedule Zurich-Milano]({{ site.baseurl }}/img/gotthard_trains.png){: .center-block}
 
-[Nine people died](https://www.alptransit.ch/en/media/press-releases/detail/article/memorial-ceremony-for-deceased-tunnel-workers/)
-during construction of the Gotthard Base Tunnel. None of them was of Swiss nationality.
 
 Header image via [Flickr](https://flic.kr/p/q8P66v) (under CC BY-ND 2.0).

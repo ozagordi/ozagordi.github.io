@@ -152,6 +152,14 @@ base tunnel, they are shown in the plot below. It might not look that impressive
 compared to the TGV. But if you look at the mountains while approaching them
 from the plain, it’s a different feeling.</p>
 
+<p><img src="/img/gotthard_trains.svg" alt="Trains schedule Zurich-Milano" class="center-block" /></p>
+
+<p><a href="https://www.alptransit.ch/en/media/press-releases/detail/article/memorial-ceremony-for-deceased-tunnel-workers/">Nine people died</a>
+during construction of the Gotthard Base Tunnel. None of them was of Swiss nationality.</p>
+
+<p>This is the code used to produce the schedule plot, the timetable for a few train
+was obtained on the SBB <a href="http://www.sbb.ch">website</a> and manually compiled.</p>
+
 <div class="language-r highlighter-rouge"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">tidyverse</span><span class="p">)</span><span class="w">
 </span><span class="n">library</span><span class="p">(</span><span class="n">ggthemr</span><span class="p">)</span><span class="w">
 </span><span class="n">ggthemr</span><span class="p">(</span><span class="s1">'solarized'</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="o">=</span><span class="s1">'outer'</span><span class="p">)</span><span class="w">
@@ -185,14 +193,15 @@ from the plain, it’s a different feeling.</p>
   </span><span class="n">scale_y_continuous</span><span class="p">(</span><span class="n">breaks</span><span class="o">=</span><span class="n">distances</span><span class="o">$</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">labels</span><span class="o">=</span><span class="n">distances</span><span class="o">$</span><span class="n">city</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">scale_x_datetime</span><span class="p">(</span><span class="n">date_breaks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1 hour"</span><span class="p">,</span><span class="w"> </span><span class="n">date_labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"%H:%M"</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">xlab</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ylab</span><span class="p">(</span><span class="s1">''</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w">
+  </span><span class="n">theme</span><span class="p">(</span><span class="n">axis.title.x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">15</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.text.x</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">15</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.title.y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">15</span><span class="p">),</span><span class="w">
+        </span><span class="n">axis.text.y</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">15</span><span class="p">),</span><span class="w">
+        </span><span class="n">legend.title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">15</span><span class="p">),</span><span class="w">
+        </span><span class="n">legend.text</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">element_text</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="m">15</span><span class="p">))</span><span class="w"> </span><span class="o">+</span><span class="w">
   </span><span class="n">scale_colour_manual</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">cbPalette</span><span class="p">)</span><span class="w">
 </span></code></pre>
 </div>
-
-<p><img src="/img/gotthard_trains.png" alt="Trains schedule Zurich-Milano" class="center-block" /></p>
-
-<p><a href="https://www.alptransit.ch/en/media/press-releases/detail/article/memorial-ceremony-for-deceased-tunnel-workers/">Nine people died</a>
-during construction of the Gotthard Base Tunnel. None of them was of Swiss nationality.</p>
 
 <p>Header image via <a href="https://flic.kr/p/q8P66v">Flickr</a> (under CC BY-ND 2.0).</p>
 
