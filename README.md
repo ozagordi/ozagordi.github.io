@@ -21,3 +21,7 @@ pushing `_site` in a subtree on the master branch as explained
     git commit -m "commit message"
     git push
     git subtree push --prefix _site origin master
+
+### Other solutions?
+
+Check [this tutorial](http://blog.blindgaenger.net/generate_github_pages_in_a_submodule.html) using submodules instead.
